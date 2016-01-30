@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.unidue.ltl.toobee</groupId>
-    <artifactId>toobee-parent</artifactId>
+    <artifactId>de.unidue.ltl.toobee</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
     <name>collection of utilities</name>
