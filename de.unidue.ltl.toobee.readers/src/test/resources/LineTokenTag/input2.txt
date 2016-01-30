@@ -1,0 +1,23 @@
+On IN
+Thanksgiving NNP
+after IN
+you PRP
+done VBN
+eating VBG
+its PRP
+#TimeToGetOut HT
+unless IN
+you PRP
+wanna VBP
+help VB
+with IN
+the DT
+dishes NNS
+
+What WP
+a DT
+productive JJ
+day NN
+. .
+Not RB
+. .

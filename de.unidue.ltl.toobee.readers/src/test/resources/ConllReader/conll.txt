@@ -1,0 +1,8 @@
+1	CD-ROMs	CD-ROM	N	NN	person=third|number=pl|gender=fem	2	OBJA	_	_
+2	liest	lesen	V	VVFIN	mood=indicative|number=sg|tense=present|person=third	0	S	_	_
+3	es	es	PRO	PPER	person=third|number=sg|case=nom|gender=neut	2	SUBJ	_	_
+4	mit	mit	ADV	ADV	subcat=sentence	2	ADV	_	_
+5	bis	bis	PREP	APPR	_	2	PP	_	_
+6	zu	zu	PREP	APPR	case=dat	5	PN	_	_
+7	32X	unknown	N	NN	person=third|pattern=NN	6	PN	_	_
+8	.	.	$.	$.	_	0	ROOT	_	_

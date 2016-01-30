@@ -1,0 +1,29 @@
+<!-- edited with XMLSpy v2007 sp1 (http://www.altova.com) by Eric Forsyth (Naval Postgraduate School) -->
+<Session xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="postClassPOSTagset.xsd">
+	<Posts>
+		<Post class="ynQuestion" user="11-09-teensUser35">hey any girls won chat?<terminals>
+				<t pos="UH" word="hey"/>
+				<t pos="DT" word="any"/>
+				<t pos="NNS" word="girls"/>
+				<t pos="^VBP" word="won"/>
+				<t pos="VB" word="chat"/>
+				<t pos="." word="?"/>
+			</terminals>
+		</Post>
+		<Post class="Emphasis" user="11-09-teensUser34">I can type "cat is on my keyboard" too!<terminals>
+				<t pos="PRP" word="I"/>
+				<t pos="MD" word="can"/>
+				<t pos="VB" word="type"/>
+				<t pos="&apos;&apos;" word="&quot;"/>
+				<t pos="NN" word="cat"/>
+				<t pos="VBZ" word="is"/>
+				<t pos="IN" word="on"/>
+				<t pos="PRP$" word="my"/>
+				<t pos="NN" word="keyboard"/>
+				<t pos="&apos;&apos;" word="&quot;"/>
+				<t pos="RB" word="too"/>
+				<t pos="." word="!"/>
+			</terminals>
+		</Post>
+		</Posts>
+</Session>
