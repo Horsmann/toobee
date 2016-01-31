@@ -55,6 +55,7 @@
 	<modules>
 		<module>de.unidue.ltl.toobee.features</module>	
 		<module>de.unidue.ltl.toobee.readers</module>
+		<module>de.unidue.ltl.toobee.poseval</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
