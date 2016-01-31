@@ -57,6 +57,7 @@
 		<module>de.unidue.ltl.toobee.readers</module>
 		<module>de.unidue.ltl.toobee.poseval</module>
 		<module>de.unidue.ltl.toobee.splitutil</module>
+		<module>de.unidue.ltl.toobee.tcreports</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
