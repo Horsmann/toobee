@@ -45,8 +45,8 @@
   		</artifactId>
   	</dependency>
   	<dependency>
-  		<groupId>de.unidue.ltl</groupId>
-  		<artifactId>de.unidue.ltl.reader</artifactId>
+  		<groupId>de.unidue.ltl.toobee</groupId>
+  		<artifactId>de.unidue.ltl.toobee.readers</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   </dependencies>  	
