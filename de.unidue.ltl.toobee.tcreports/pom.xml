@@ -3,15 +3,6 @@
   <groupId>de.unidue.ltl.toobee.tcreports</groupId>
   <artifactId>de.unidue.ltl.toobee.tcreports</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <repositories>
-  <repository>
-			<id>ukp-oss-model-releases</id>
-			<url>http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-model-releases-local</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		</repositories>
  <dependencies>
   	<dependency>
   		<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
@@ -52,4 +43,9 @@
 			</plugin>
 		</plugins>  
 	</build>	  
+  <parent>
+  	<groupId>de.unidue.ltl.toobee</groupId>
+  	<artifactId>de.unidue.ltl.toobee</artifactId>
+  	<version>1.0</version>
+  </parent>
 </project>

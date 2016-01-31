@@ -1,6 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.unidue.ltl.toobee.writers</groupId>
   <artifactId>de.unidue.ltl.toobee.writers</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <dependencies>
@@ -29,4 +28,9 @@
   		</dependency>
   	</dependencies>
   </dependencyManagement>  
+  <parent>
+  	<groupId>de.unidue.ltl.toobee</groupId>
+  	<artifactId>de.unidue.ltl.toobee</artifactId>
+  	<version>1.0</version>
+  </parent>
 </project>
