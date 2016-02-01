@@ -36,7 +36,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-	<repository>
+		<repository>
 			<id>ltl-snapshots</id>
 			<url>https://basa.ltl.uni-due.de:34001/artifactory/snapshots</url>
 			<releases>
@@ -45,15 +45,17 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		<id>ltl-releases</id>
+		</repository>
+		<repository>
+			<id>ltl-releases</id>
 			<url>https://basa.ltl.uni-due.de:34001/artifactory/releases</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
 			<snapshots>
 				<enabled>false</enabled>
-			</snapshots>			
-		</repository>		
+			</snapshots>
+		</repository>
 	</repositories>
 	<build>
 		<pluginManagement>
@@ -73,7 +75,7 @@
 	<modules>
 		<module>de.unidue.ltl.toobee.features</module>
 		<module>de.unidue.ltl.toobee.normalization</module>
-		<module>de.unidue.ltl.toobee.poseval</module>	
+		<module>de.unidue.ltl.toobee.poseval</module>
 		<module>de.unidue.ltl.toobee.readers</module>
 		<module>de.unidue.ltl.toobee.splitutil</module>
 		<module>de.unidue.ltl.toobee.tcreports</module>
@@ -81,12 +83,12 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-  			<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
-  			<artifactId>dkpro-tc</artifactId>
-  			<version>0.8.0-SNAPSHOT</version>
-  			<type>pom</type>
-  			<scope>import</scope>
-  		</dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
+				<artifactId>dkpro-tc</artifactId>
+				<version>0.8.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
