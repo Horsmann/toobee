@@ -36,6 +36,16 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+	<repository>
+			<id>ltl-snapshots</id>
+			<url>https://basa.ltl.uni-due.de:34001/artifactory/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>		
 	</repositories>
 	<build>
 		<pluginManagement>
