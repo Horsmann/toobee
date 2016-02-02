@@ -38,6 +38,7 @@ public class TestIsSmiley {
 		assertTrue(IsSmiley.isSmiley(";o)"));
 		assertTrue(IsSmiley.isSmiley(":o)"));
 		assertTrue(IsSmiley.isSmiley(":O)"));
+		assertTrue(IsSmiley.isSmiley(";O)"));
 		assertTrue(IsSmiley.isSmiley("8-)"));
 		assertTrue(IsSmiley.isSmiley(":-)"));
 	}

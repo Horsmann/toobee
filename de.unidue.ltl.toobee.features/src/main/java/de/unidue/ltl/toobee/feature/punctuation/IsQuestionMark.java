@@ -1,4 +1,4 @@
-package de.unidue.ltl.toobee.feature;
+package de.unidue.ltl.toobee.feature.punctuation;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,26 +11,26 @@ import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import de.tudarmstadt.ukp.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
 
-public class IsExclamationMark extends FeatureExtractorResource_ImplBase
-		implements ClassificationUnitFeatureExtractor {
+public class IsQuestionMark extends FeatureExtractorResource_ImplBase implements
+		ClassificationUnitFeatureExtractor {
 
-	private final String FEATURE_NAME = "isExclamationMark";
+	private final String FEATURE_NAME = "isQuestionMark";
 
 	public Set<Feature> extract(JCas aView,
 			TextClassificationUnit aClassificationUnit)
 			throws TextClassificationException {
 
-		boolean exclamationMark = isExclamationMark(aClassificationUnit
+		boolean questionMark = isQuestionMark(aClassificationUnit
 				.getCoveredText());
-		Feature feature = new Feature(FEATURE_NAME, exclamationMark ? 1 : 0);
+		Feature feature = new Feature(FEATURE_NAME, questionMark ? 1 : 0);
 
 		Set<Feature> features = new HashSet<Feature>();
 		features.add(feature);
 		return features;
 	}
 
-	static boolean isExclamationMark(String aToken) {
-		return aToken.equals("!");
+	static boolean isQuestionMark(String aToken) {
+		return aToken.equals("?");
 	}
 
 }

@@ -1,10 +1,10 @@
-package de.unidue.ltl.toobee.feature;
+package de.unidue.ltl.toobee.feature.punctuation;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.unidue.ltl.toobee.feature.IsColon;
+import de.unidue.ltl.toobee.feature.punctuation.IsColon;
 
 public class TestIsColon {
 
