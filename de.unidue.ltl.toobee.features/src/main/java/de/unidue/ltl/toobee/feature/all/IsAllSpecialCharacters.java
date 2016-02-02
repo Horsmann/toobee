@@ -29,7 +29,7 @@ import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import de.tudarmstadt.ukp.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
 
-public class IsAllPunctuation
+public class IsAllSpecialCharacters
     extends FeatureExtractorResource_ImplBase
     implements ClassificationUnitFeatureExtractor
 {
@@ -53,7 +53,7 @@ public class IsAllPunctuation
             return false;
         }
 
-        return Pattern.matches("[;,:!\\?\\.]+", aCoveredText);
+        return Pattern.matches("[^A-Za-z0-9]+", aCoveredText);
     }
 
 }

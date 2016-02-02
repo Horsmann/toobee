@@ -12,6 +12,13 @@ public class TestIsAllNonPunctuationSpecialChars {
 	public void testAllNonPunctuationSpecialChars(){
 		assertTrue(IsAllNonPunctuationSpecialChars.isNonPuncSpecialChar("<--"));
 		assertTrue(IsAllNonPunctuationSpecialChars.isNonPuncSpecialChar("/"));
+		assertTrue(IsAllNonPunctuationSpecialChars.isNonPuncSpecialChar("+"));
+		assertTrue(IsAllNonPunctuationSpecialChars.isNonPuncSpecialChar("*"));
+		
+		assertFalse(IsAllNonPunctuationSpecialChars.isNonPuncSpecialChar(":)"));
+		assertFalse(IsAllNonPunctuationSpecialChars.isNonPuncSpecialChar(":P"));
+		assertFalse(IsAllNonPunctuationSpecialChars.isNonPuncSpecialChar(":-P"));
+		assertFalse(IsAllNonPunctuationSpecialChars.isNonPuncSpecialChar("(-8"));
 	}
 	
 }
