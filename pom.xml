@@ -79,6 +79,8 @@
 		<module>de.unidue.ltl.toobee.readers</module>
 		<module>de.unidue.ltl.toobee.splitutil</module>
 		<module>de.unidue.ltl.toobee.tcreports</module>
+		<module>de.unidue.ltl.toobee.twitter</module>
+		<module>de.unidue.ltl.toobee.writers</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
