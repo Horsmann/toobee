@@ -48,7 +48,7 @@
 		</repository>
 		<repository>
 			<id>ltl-releases</id>
-			<url>https://basa.ltl.uni-due.de:34001/artifactory/releases</url>
+			<url>http://basa.ltl.uni-due.de:34001/artifactory/releases</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
