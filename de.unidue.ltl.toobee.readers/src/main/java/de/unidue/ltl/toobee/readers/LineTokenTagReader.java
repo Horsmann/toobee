@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.commons.logging.LogFactory;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.Type;
@@ -86,10 +85,6 @@ public class LineTokenTagReader extends
 	private List<BufferedReader> bfs = new ArrayList<BufferedReader>();
 	private int currentReader = 0;
 
-	private int countFiles = 1;
-	private int countPosts = 0;
-	private int countTokens = 0;
-
 	private int instanceId = 1;
 
 	@Override
@@ -132,7 +127,7 @@ public class LineTokenTagReader extends
 	public void getNext(JCas aJCas) throws IOException, CollectionException {
 
 		DocumentMetaData md = new DocumentMetaData(aJCas);
-		md.setDocumentTitle("Ritter2011");
+		md.setDocumentTitle("");
 		md.setDocumentId("" + (instanceId++));
 		md.setLanguage(language);
 		md.addToIndexes();
@@ -171,7 +166,6 @@ public class LineTokenTagReader extends
 			pos.addToIndexes();
 			token.setPos(pos);
 
-			countTokens++;
 		}
 		aJCas.setDocumentText(documentText);
 		
@@ -196,7 +190,6 @@ public class LineTokenTagReader extends
 			posting.add(readLine);
 		}
 		if (!posting.isEmpty()) {
-			countPosts++;
 			return true;
 		}
 
@@ -214,13 +207,8 @@ public class LineTokenTagReader extends
 
 		if (currentReader + 1 < bfs.size()) {
 			currentReader++;
-			countFiles++;
 			return hasNext();
 		}
-		LogFactory.getLog(getClass()).info(
-				this.getClass().getName() + "--> read: " + countFiles
-						+ " files with " + countPosts + " posts and "
-						+ countTokens + " tokens");
 		return false;
 	}
 
