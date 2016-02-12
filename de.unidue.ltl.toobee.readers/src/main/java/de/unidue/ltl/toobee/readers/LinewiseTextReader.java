@@ -27,7 +27,6 @@ import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.exception.NestableRuntimeException;
-import org.apache.commons.logging.LogFactory;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -73,10 +72,6 @@ public class LinewiseTextReader
     private List<BufferedReader> bfs = new ArrayList<BufferedReader>();
     private int currentReader = 0;
 
-    private int countFiles = 1;
-    private int countPosts = 0;
-    private int countTokens = 0;
-
     private int instanceId = 1;
 
     private String nextLine = null;
@@ -111,7 +106,7 @@ public class LinewiseTextReader
     {
 
         DocumentMetaData md = new DocumentMetaData(aJCas);
-        md.setDocumentTitle("title");
+        md.setDocumentTitle("");
         md.setDocumentId("" + (instanceId++));
         md.setLanguage(language);
         md.addToIndexes();
@@ -181,12 +176,8 @@ public class LinewiseTextReader
 
         if (currentReader + 1 < bfs.size()) {
             currentReader++;
-            countFiles++;
             return hasNext();
         }
-        LogFactory.getLog(getClass()).info(
-                this.getClass().getName() + "--> read: " + countFiles + " files with " + countPosts
-                        + " posts and " + countTokens + " tokens");
         return false;
     }
 

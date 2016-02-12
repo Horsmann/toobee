@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.commons.logging.LogFactory;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.Type;
@@ -80,10 +79,6 @@ public class ConllReader extends
 	private List<BufferedReader> bfs = new ArrayList<BufferedReader>();
 	private int currentReader = 0;
 
-	private int countFiles = 1;
-	private int countPosts = 0;
-	private int countTokens = 0;
-
 	private int instanceId = 1;
 
 	@Override
@@ -126,7 +121,7 @@ public class ConllReader extends
 	public void getNext(JCas aJCas) throws IOException, CollectionException {
 
 		DocumentMetaData md = new DocumentMetaData(aJCas);
-		md.setDocumentTitle("Ritter2011");
+		md.setDocumentTitle("");
 		md.setDocumentId("" + (instanceId++));
 		md.setLanguage(language);
 		md.addToIndexes();
@@ -163,8 +158,6 @@ public class ConllReader extends
 			pos.setPosValue(tokenTag[1]);
 			pos.addToIndexes();
 			token.setPos(pos);
-
-			countTokens++;
 		}
 		aJCas.setDocumentText(documentText);
 		
@@ -172,14 +165,6 @@ public class ConllReader extends
 				.length());
 		sentence.addToIndexes();
 		
-//		for (Sentence s : JCasUtil.select(aJCas, Sentence.class)){
-//		List<Token> selectCovered = JCasUtil.selectCovered(aJCas, Token.class, s.getBegin(), s.getEnd());
-//		for (Token t : selectCovered){
-//			System.out.print("["+t.getCoveredText()+"]");
-//		}
-//		System.out.println();
-//	}
-
 	}
 
 	public boolean hasNext() throws IOException, CollectionException {
@@ -194,7 +179,6 @@ public class ConllReader extends
 			sentence.add(readLine);
 		}
 		if (!sentence.isEmpty()) {
-			countPosts++;
 			return true;
 		}
 
@@ -212,13 +196,8 @@ public class ConllReader extends
 
 		if (currentReader + 1 < bfs.size()) {
 			currentReader++;
-			countFiles++;
 			return hasNext();
 		}
-		LogFactory.getLog(getClass()).info(
-				this.getClass().getName() + "--> read: " + countFiles
-						+ " files with " + countPosts + " posts and "
-						+ countTokens + " tokens");
 		return false;
 	}
 

@@ -38,7 +38,7 @@
 		</repository>
 		<repository>
 			<id>ltl-snapshots</id>
-			<url>https://basa.ltl.uni-due.de:34001/artifactory/snapshots</url>
+			<url>http://basa.ltl.uni-due.de:34001/artifactory/snapshots</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
@@ -48,7 +48,7 @@
 		</repository>
 		<repository>
 			<id>ltl-releases</id>
-			<url>https://basa.ltl.uni-due.de:34001/artifactory/releases</url>
+			<url>http://basa.ltl.uni-due.de:34001/artifactory/releases</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -79,6 +79,8 @@
 		<module>de.unidue.ltl.toobee.readers</module>
 		<module>de.unidue.ltl.toobee.splitutil</module>
 		<module>de.unidue.ltl.toobee.tcreports</module>
+		<module>de.unidue.ltl.toobee.twitter</module>
+		<module>de.unidue.ltl.toobee.writers</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
