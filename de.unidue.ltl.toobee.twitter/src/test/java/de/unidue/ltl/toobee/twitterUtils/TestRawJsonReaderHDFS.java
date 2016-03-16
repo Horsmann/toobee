@@ -34,30 +34,30 @@ public class TestRawJsonReaderHDFS {
 	String sourceFileA = null;
 	String sourceFileB = null;
 
-	@Ignore
-	public void testRawTweetAnnotation() throws Exception {
-		ExternalResourceDescription hdfsResource = ExternalResourceFactory
-				.createExternalResourceDescription(
-						HdfsResourceLoaderLocator.class,
-						HdfsResourceLoaderLocator.PARAM_FILESYSTEM, hdfsAddress);
-
-		CollectionReader reader = CollectionReaderFactory.createReader(
-				RawJsonTweetReaderFIFO.class,
-				RawJsonTweetReaderFIFO.KEY_RESOURCE_RESOLVER, hdfsResource,
-				RawJsonTweetReaderFIFO.PARAM_SOURCE_LOCATION, "hdfs:" + hdfsFolder,
-				RawJsonTweetReaderFIFO.PARAM_PATTERNS, new String[] { "*.gz",
-						"*.bz2" });
-
-		List<String> documents = readDocuments(reader);
-
-		assertEquals(4, documents.size());
-		assertTrue(StringEscapeUtils.unescapeJava(documents.get(0)).startsWith(
-				"「あやつが"));
-		assertTrue(documents.get(1).startsWith("Iyaps saking"));
-		assertTrue(documents.get(2).endsWith("alright mate"));
-		assertTrue(documents.get(3).startsWith("Let's "));
-
-	}
+//	@Ignore
+//	public void testRawTweetAnnotation() throws Exception {
+//		ExternalResourceDescription hdfsResource = ExternalResourceFactory
+//				.createExternalResourceDescription(
+//						HdfsResourceLoaderLocator.class,
+//						HdfsResourceLoaderLocator.PARAM_FILESYSTEM, hdfsAddress);
+//
+//		CollectionReader reader = CollectionReaderFactory.createReader(
+//				RawJsonTweetReaderFIFO.class,
+//				RawJsonTweetReaderFIFO.KEY_RESOURCE_RESOLVER, hdfsResource,
+//				RawJsonTweetReaderFIFO.PARAM_SOURCE_LOCATION, "hdfs:" + hdfsFolder,
+//				RawJsonTweetReaderFIFO.PARAM_PATTERNS, new String[] { "*.gz",
+//						"*.bz2" });
+//
+//		List<String> documents = readDocuments(reader);
+//
+//		assertEquals(4, documents.size());
+//		assertTrue(StringEscapeUtils.unescapeJava(documents.get(0)).startsWith(
+//				"「あやつが"));
+//		assertTrue(documents.get(1).startsWith("Iyaps saking"));
+//		assertTrue(documents.get(2).endsWith("alright mate"));
+//		assertTrue(documents.get(3).startsWith("Let's "));
+//
+//	}
 
 	private List<String> readDocuments(CollectionReader aReader)
 			throws Exception {
