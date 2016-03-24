@@ -1,9 +1,11 @@
 package de.unidue.ltl.toobee.tcreports;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 
@@ -48,16 +50,12 @@ public class OverallAccuracyCollector
         List<Double> accuracies = new ArrayList<>();
 
         for (File f : writtenFiles) {
-            List<String> lines = FileUtils.readLines(f);
-            for (String l : lines) {
-                if (!l.startsWith(ReportConstants.PCT_CORRECT+"=")) {
-                    continue;
-                }
-                String value = l.replaceAll(ReportConstants.PCT_CORRECT+"=", "");
-                value.replaceAll(",", ".");
-                Double accuracy = Double.valueOf(value);
-                accuracies.add(accuracy*100);
-            }
+            Properties p = new Properties();
+            p.load(new FileInputStream(f));
+            String property = p.getProperty(ReportConstants.PCT_CORRECT);
+            String value = property.replaceAll(",", ".");
+            Double accuracy = Double.valueOf(value);
+            accuracies.add(accuracy * 100);
         }
         
         StringBuilder sb =  new StringBuilder();
