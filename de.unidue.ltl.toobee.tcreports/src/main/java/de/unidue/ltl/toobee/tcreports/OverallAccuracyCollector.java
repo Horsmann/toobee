@@ -33,8 +33,7 @@ public class OverallAccuracyCollector
 
                 File storageFolder = storageService.locateKey(subcontext.getId(), "");
                 File evaluation = new File(storageFolder,
-                        "output/"
-                                + new CRFSuiteAdapter()
+                                new CRFSuiteAdapter()
                                         .getFrameworkFilename(AdapterNameEntries.evaluationFile));
                 writtenFiles.add(evaluation);
                 break;
@@ -76,7 +75,6 @@ public class OverallAccuracyCollector
         double varianz = getVarianz(avg,accuracies);
         
         sb.append("\n");
-        //sb.append(String.format("Varianz: %.2f", varianz));
         sb.append(String.format("Std-Dev: %.2f\n", Math.sqrt(varianz)));
         
         FileUtils.writeStringToFile(new File(output), sb.toString());
