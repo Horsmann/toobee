@@ -9,11 +9,11 @@
   </parent>
   <dependencies>
   	<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
+			<groupId>org.dkpro.tc</groupId>
 			<artifactId>dkpro-tc-features</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
+			<groupId>org.dkpro.tc</groupId>
 			<artifactId>dkpro-tc-features-ngram</artifactId>
 		</dependency>
 		<dependency>

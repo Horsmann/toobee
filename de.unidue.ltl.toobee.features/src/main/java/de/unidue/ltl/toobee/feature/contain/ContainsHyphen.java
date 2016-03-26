@@ -4,12 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.uima.jcas.JCas;
-
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
-import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
+import org.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.type.TextClassificationUnit;
 
 public class ContainsHyphen extends FeatureExtractorResource_ImplBase implements
 		ClassificationUnitFeatureExtractor {

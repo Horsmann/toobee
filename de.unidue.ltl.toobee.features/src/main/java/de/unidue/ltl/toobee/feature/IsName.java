@@ -29,11 +29,10 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
-
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
-import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
-import de.tudarmstadt.ukp.dkpro.tc.features.tcu.TcuLookUpTable;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.type.TextClassificationUnit;
+import org.dkpro.tc.features.tcu.TcuLookUpTable;
 
 public class IsName extends TcuLookUpTable{
 	public static final String PARAM_NAMELIST_FOLDER = "namelistFolder";
