@@ -12,9 +12,8 @@ import org.apache.commons.io.FileUtils;
 import org.dkpro.lab.reporting.BatchReportBase;
 import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
-
-import de.tudarmstadt.ukp.dkpro.tc.core.Constants;
-import de.tudarmstadt.ukp.dkpro.tc.crfsuite.task.CRFSuiteTestTask;
+import org.dkpro.tc.core.Constants;
+import org.dkpro.tc.crfsuite.task.CRFSuiteTestTask;
 
 public class AccuracyPerWordClass
     extends BatchReportBase
