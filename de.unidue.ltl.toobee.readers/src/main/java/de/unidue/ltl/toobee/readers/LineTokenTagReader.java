@@ -67,13 +67,6 @@ public class LineTokenTagReader extends
 	@ConfigurationParameter(name = PARAM_LANGUAGE, mandatory = false)
 	private String language;
 
-	/**
-	 * Whether coarse-grained or fine-grained POS tags should be used.
-	 */
-	public static final String PARAM_USE_COARSE_GRAINED = "useCoarseGrained";
-	@ConfigurationParameter(name = PARAM_USE_COARSE_GRAINED, mandatory = true, defaultValue = "false")
-	protected boolean useCoarseGrained;
-
 	public static final String ENCODING_AUTO = "auto";
 
 	private MappingProvider posMappingProvider;
