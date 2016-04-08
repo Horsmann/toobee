@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 
@@ -102,14 +103,7 @@ public class SplitUtil
         }
 
         if (shuffle) {
-            Collections.sort(all, new Comparator<List<String>>()
-            {
-
-                public int compare(List<String> o1, List<String> o2)
-                {
-                    return o1.get(o1.size() / 2).compareTo(o2.get(o2.size() / 2));
-                }
-            });
+            Collections.shuffle(all, new Random(System.nanoTime()));
         }
 
         List<String> out = new ArrayList<String>();
