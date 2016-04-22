@@ -34,8 +34,7 @@ public class OverallAccuracyCollector
 
                 File storageFolder = storageService.locateKey(subcontext.getId(), "");
                 File evaluation = new File(storageFolder,
-                                new CRFSuiteAdapter()
-                                        .getFrameworkFilename(AdapterNameEntries.evaluationFile));
+                               Constants.RESULTS_FILENAME);
                 writtenFiles.add(evaluation);
                 break;
             }
