@@ -33,10 +33,6 @@
   		</artifactId>
   		<scope>test</scope>
   	</dependency>
-  	<dependency>
-  		<groupId>org.dkpro.tc</groupId>
-  		<artifactId>dkpro-tc-ml</artifactId>
-  	</dependency>
   </dependencies>    
 	<dependencyManagement>
 		<dependencies>
