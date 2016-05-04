@@ -9,7 +9,7 @@ import de.unidue.ltl.toobee.feature.punctuation.IsColon;
 public class TestIsColon {
 
 	@Test
-	public void testIsDot(){
+	public void runTest(){
 		assertTrue(IsColon.isColon(":"));
 		
 		assertFalse(IsColon.isColon(","));

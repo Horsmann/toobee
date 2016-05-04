@@ -9,7 +9,7 @@ import de.unidue.ltl.toobee.feature.contain.ContainsCapitalLetter;
 public class TestContainsComma {
 	
 	@Test
-	public void testContainsCapitalLetter(){
+	public void runTest(){
 		assertTrue(ContainsCapitalLetter.anyLetterCapitalized("ABC,DE"));
 		assertTrue(ContainsCapitalLetter.anyLetterCapitalized("abC,de"));
 		assertTrue(ContainsCapitalLetter.anyLetterCapitalized("23C,2"));

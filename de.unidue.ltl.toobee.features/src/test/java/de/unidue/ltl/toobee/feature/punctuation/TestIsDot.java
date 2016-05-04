@@ -9,7 +9,7 @@ import de.unidue.ltl.toobee.feature.punctuation.IsDot;
 public class TestIsDot {
 
 	@Test
-	public void testIsDot(){
+	public void runTest(){
 		assertTrue(IsDot.isDot("."));
 		
 		assertFalse(IsDot.isDot(","));

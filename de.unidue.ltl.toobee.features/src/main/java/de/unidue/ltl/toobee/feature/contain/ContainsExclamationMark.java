@@ -1,4 +1,4 @@
-package de.unidue.ltl.toobee.feature.punctuation;
+package de.unidue.ltl.toobee.feature.contain;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,28 +10,25 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationUnit;
 
-public class IsApostroph
+public class ContainsExclamationMark
     extends FeatureExtractorResource_ImplBase
     implements ClassificationUnitFeatureExtractor
 {
-
-    private final String FEATURE_NAME = "isApostroph";
+    private final String FEATURE_NAME = "containsExclamationMark";
 
     public Set<Feature> extract(JCas aView, TextClassificationUnit aClassificationUnit)
         throws TextClassificationException
     {
-
-        boolean exclamationMark = isApostroph(aClassificationUnit.getCoveredText());
-        Feature feature = new Feature(FEATURE_NAME, exclamationMark ? 1 : 0);
-
+        boolean contains = contains(aClassificationUnit.getCoveredText());
+        Feature feature = new Feature(FEATURE_NAME, contains ? 1 : 0);
         Set<Feature> features = new HashSet<Feature>();
         features.add(feature);
         return features;
     }
 
-    static boolean isApostroph(String aToken)
+    public static boolean contains(String coveredText)
     {
-        return aToken.equals("'") || aToken.equals("`");
+        return coveredText.contains("!");
     }
 
 }

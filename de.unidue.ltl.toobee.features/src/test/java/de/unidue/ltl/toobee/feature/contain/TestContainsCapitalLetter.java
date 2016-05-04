@@ -9,7 +9,7 @@ import de.unidue.ltl.toobee.feature.contain.ContainsCapitalLetter;
 public class TestContainsCapitalLetter {
 	
 	@Test
-	public void testContainsCapitalLetter(){
+	public void runTest(){
 		assertTrue(ContainsCapitalLetter.anyLetterCapitalized("ABCDE"));
 		assertTrue(ContainsCapitalLetter.anyLetterCapitalized("abCde"));
 		assertTrue(ContainsCapitalLetter.anyLetterCapitalized("23C2"));

@@ -9,7 +9,7 @@ import de.unidue.ltl.toobee.feature.punctuation.IsQuestionMark;
 public class TestIsQuestionMark {
 
 	@Test
-	public void testIsQuestionMark(){
+	public void runTest(){
 		assertTrue(IsQuestionMark.isQuestionMark("?"));
 		
 		assertFalse(IsQuestionMark.isQuestionMark(","));

@@ -9,7 +9,7 @@ import de.unidue.ltl.toobee.feature.punctuation.IsExclamationMark;
 public class TestIsExclamationMark {
 
 	@Test
-	public void testIsExclamationMark(){
+	public void runTest(){
 		assertTrue(IsExclamationMark.isExclamationMark("!"));
 		
 		assertFalse(IsExclamationMark.isExclamationMark(","));
