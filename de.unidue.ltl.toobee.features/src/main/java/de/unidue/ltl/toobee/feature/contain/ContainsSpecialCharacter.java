@@ -1,4 +1,4 @@
-package de.unidue.ltl.toobee.feature.punctuation;
+package de.unidue.ltl.toobee.feature.contain;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,10 +10,10 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationUnit;
 
-public class IsSpecialCharacter extends FeatureExtractorResource_ImplBase
+public class ContainsSpecialCharacter extends FeatureExtractorResource_ImplBase
 		implements ClassificationUnitFeatureExtractor {
 
-	private final String FEATURE_NAME = "isSpecialChar";
+	private final String FEATURE_NAME = "containsSpecialChar";
 
 	@Override
 	public Set<Feature> extract(JCas view,
@@ -21,7 +21,7 @@ public class IsSpecialCharacter extends FeatureExtractorResource_ImplBase
 					throws TextClassificationException {
 
 		String text = classificationUnit.getCoveredText();
-		boolean b = is(text);
+		boolean b = contains(text);
 		
 		Set<Feature> features = new HashSet<Feature>();
 		features.add(new Feature(FEATURE_NAME,b ? 1 :0));
@@ -29,9 +29,9 @@ public class IsSpecialCharacter extends FeatureExtractorResource_ImplBase
 		return features;
 	}
 
-    public static boolean is(String text)
+    public static boolean contains(String text)
     {
-        return text.length() == 1 && text.matches("[^a-zA-Z0-9]");
+        return text.matches("[^a-zA-Z0-9]+");
     }
 
 }
