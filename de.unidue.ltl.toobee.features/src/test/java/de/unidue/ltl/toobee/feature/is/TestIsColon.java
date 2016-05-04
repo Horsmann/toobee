@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.unidue.ltl.toobee.feature.punctuation.IsColon;
+import de.unidue.ltl.toobee.feature.is.IsColon;
 
 public class TestIsColon {
 

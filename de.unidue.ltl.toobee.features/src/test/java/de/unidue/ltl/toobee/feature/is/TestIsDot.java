@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.unidue.ltl.toobee.feature.punctuation.IsDot;
+import de.unidue.ltl.toobee.feature.is.IsDot;
 
 public class TestIsDot {
 

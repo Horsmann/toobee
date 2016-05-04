@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.unidue.ltl.toobee.feature.punctuation.IsApostroph;
+import de.unidue.ltl.toobee.feature.is.IsApostroph;
 
 public class TestIsApostroph {
 

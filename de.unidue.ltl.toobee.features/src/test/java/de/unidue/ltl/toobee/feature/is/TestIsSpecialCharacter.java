@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.unidue.ltl.toobee.feature.punctuation.IsSpecialCharacter;
+import de.unidue.ltl.toobee.feature.is.IsSpecialCharacter;
 
 public class TestIsSpecialCharacter {
 

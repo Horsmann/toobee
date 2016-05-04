@@ -1,4 +1,4 @@
-package de.unidue.ltl.toobee.feature.punctuation;
+package de.unidue.ltl.toobee.feature.is;
 
 import java.util.HashSet;
 import java.util.Map;
