@@ -1,8 +1,10 @@
-package de.unidue.ltl.toobee.feature.punctuation;
+package de.unidue.ltl.toobee.feature.is;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import de.unidue.ltl.toobee.feature.punctuation.IsSpecialCharacter;
 
 public class TestIsSpecialCharacter {
 

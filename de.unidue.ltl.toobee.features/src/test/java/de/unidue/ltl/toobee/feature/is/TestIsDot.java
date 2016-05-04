@@ -1,4 +1,4 @@
-package de.unidue.ltl.toobee.feature.punctuation;
+package de.unidue.ltl.toobee.feature.is;
 
 import static org.junit.Assert.*;
 
