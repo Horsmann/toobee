@@ -1,4 +1,4 @@
-package de.unidue.ltl.toobee.feature.is;
+package de.unidue.ltl.toobee.feature.contain;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,29 +10,31 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationUnit;
 
-public class IsBracket
+public class ContainsBracket
     extends FeatureExtractorResource_ImplBase
     implements ClassificationUnitFeatureExtractor
 {
 
-    private final String FEATURE_NAME = "isBracket";
+    private final String FEATURE_NAME = "containsBracket";
 
-    public Set<Feature> extract(JCas aView, TextClassificationUnit aClassificationUnit)
+    @Override
+    public Set<Feature> extract(JCas view, TextClassificationUnit classificationUnit)
         throws TextClassificationException
     {
 
-        boolean dot = is(aClassificationUnit.getCoveredText());
-        Feature feature = new Feature(FEATURE_NAME, dot ? 1 : 0);
+        String text = classificationUnit.getCoveredText();
+        boolean b = contains(text);
 
         Set<Feature> features = new HashSet<Feature>();
-        features.add(feature);
+        features.add(new Feature(FEATURE_NAME, b ? 1 : 0));
+
         return features;
     }
 
-    static boolean is(String aToken)
+    public static boolean contains(String text)
     {
-        return aToken.equals("(") || aToken.equals(")") || aToken.equals("{") || aToken.equals("}")
-                || aToken.equals("[") || aToken.equals("]");
+        return text.contains("(") || text.contains(")") || text.contains("{") || text.contains("}")
+                || text.contains("[") || text.contains("]");
     }
 
 }
