@@ -19,16 +19,16 @@ public class IsComma extends FeatureExtractorResource_ImplBase
 			TextClassificationUnit aClassificationUnit)
 			throws TextClassificationException {
 
-		boolean exclamationMark = isExclamationMark(aClassificationUnit
+		boolean eval = is(aClassificationUnit
 				.getCoveredText());
-		Feature feature = new Feature(FEATURE_NAME, exclamationMark ? 1 : 0);
+		Feature feature = new Feature(FEATURE_NAME, eval ? 1 : 0);
 
 		Set<Feature> features = new HashSet<Feature>();
 		features.add(feature);
 		return features;
 	}
 
-	static boolean isExclamationMark(String aToken) {
+	static boolean is(String aToken) {
 		return aToken.equals(",");
 	}
 

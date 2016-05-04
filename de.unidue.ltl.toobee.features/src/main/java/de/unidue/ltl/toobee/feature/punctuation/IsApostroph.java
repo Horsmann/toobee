@@ -21,7 +21,7 @@ public class IsApostroph
         throws TextClassificationException
     {
 
-        boolean exclamationMark = isApostroph(aClassificationUnit.getCoveredText());
+        boolean exclamationMark = is(aClassificationUnit.getCoveredText());
         Feature feature = new Feature(FEATURE_NAME, exclamationMark ? 1 : 0);
 
         Set<Feature> features = new HashSet<Feature>();
@@ -29,7 +29,7 @@ public class IsApostroph
         return features;
     }
 
-    static boolean isApostroph(String aToken)
+    static boolean is(String aToken)
     {
         return aToken.equals("'") || aToken.equals("`");
     }
