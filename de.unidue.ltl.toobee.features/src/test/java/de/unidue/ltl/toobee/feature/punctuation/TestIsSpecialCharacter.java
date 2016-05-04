@@ -1,6 +1,6 @@
 package de.unidue.ltl.toobee.feature.punctuation;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -15,5 +15,8 @@ public class TestIsSpecialCharacter {
 		assertTrue(IsSpecialCharacter.is("¢"));
 		assertTrue(IsSpecialCharacter.is("{"));
 		assertTrue(IsSpecialCharacter.is("}"));
+		
+		assertFalse(IsSpecialCharacter.is("a"));
+		assertFalse(IsSpecialCharacter.is("1"));
 	}
 }
