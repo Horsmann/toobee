@@ -68,8 +68,8 @@ public class LineTokenTagReader
     private String language;
 
     public static final String PARAM_SEQUENCES_PER_CAS = "PARAM_SEQUENCES_PER_CAS";
-    @ConfigurationParameter(name = PARAM_SEQUENCES_PER_CAS, mandatory = true, defaultValue = "100")
-    private int sentLimit;
+    @ConfigurationParameter(name = PARAM_SEQUENCES_PER_CAS, mandatory = true, defaultValue = "1000")
+    private int seqLimit;
 
     public static final String ENCODING_AUTO = "auto";
 
@@ -191,7 +191,7 @@ public class LineTokenTagReader
         while ((readLine = br.readLine()) != null) {
             if (readLine.isEmpty()) {
                 readSeq++;
-                if (readSeq == sentLimit) {
+                if (readSeq == seqLimit) {
                     break;
                 }
                 sequences.add(sequence);
