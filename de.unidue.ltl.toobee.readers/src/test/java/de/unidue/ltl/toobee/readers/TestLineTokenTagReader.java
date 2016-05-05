@@ -3,6 +3,9 @@ package de.unidue.ltl.toobee.readers;
 import static org.apache.uima.fit.util.JCasUtil.select;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.uima.collection.CollectionReader;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.factory.JCasFactory;
@@ -45,17 +48,83 @@ public class TestLineTokenTagReader
     {
         CollectionReader reader = getReader("*.limit", 5);
 
-        JCas jcas = JCasFactory.createJCas();
-        reader.hasNext();
-        reader.getNext(jcas.getCas());
-        assertEquals(5, JCasUtil.select(jcas, Sentence.class).size());
-        assertEquals(41, JCasUtil.select(jcas, Token.class).size());
+        List<JCas> readCas = new ArrayList<>();
 
-        jcas = JCasFactory.createJCas();
-        reader.hasNext();
-        reader.getNext(jcas.getCas());
-        assertEquals(1, JCasUtil.select(jcas, Sentence.class).size());
-        assertEquals(7, JCasUtil.select(jcas, Token.class).size());
+        while (reader.hasNext()) {
+            JCas jcas = JCasFactory.createJCas();
+            reader.getNext(jcas.getCas());
+            readCas.add(jcas);
+        }
+
+        assertEquals(10, readCas.size());
+        // 1st
+        assertEquals(15, JCasUtil.select(readCas.get(0), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(0), Sentence.class).size());
+
+        // 2nd
+        assertEquals(15, JCasUtil.select(readCas.get(1), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(1), Sentence.class).size());
+
+        // 3rd
+        assertEquals(15, JCasUtil.select(readCas.get(2), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(2), Sentence.class).size());
+
+        // 4th
+        assertEquals(15, JCasUtil.select(readCas.get(3), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(3), Sentence.class).size());
+
+        // 5th
+        assertEquals(15, JCasUtil.select(readCas.get(4), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(4), Sentence.class).size());
+
+        // 6th
+        assertEquals(15, JCasUtil.select(readCas.get(5), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(5), Sentence.class).size());
+
+        // 7th
+        assertEquals(15, JCasUtil.select(readCas.get(6), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(6), Sentence.class).size());
+
+        // 8th
+        assertEquals(15, JCasUtil.select(readCas.get(7), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(7), Sentence.class).size());
+
+        // 9th
+        assertEquals(15, JCasUtil.select(readCas.get(8), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(8), Sentence.class).size());
+
+        
+        reader = getReader("*.limit", 9);
+        readCas = new ArrayList<>();
+        while (reader.hasNext()) {
+            JCas jcas = JCasFactory.createJCas();
+            reader.getNext(jcas.getCas());
+            readCas.add(jcas);
+        }
+        assertEquals(6, readCas.size());
+        // 1st
+        assertEquals(27, JCasUtil.select(readCas.get(0), Token.class).size());
+        assertEquals(9, JCasUtil.select(readCas.get(0), Sentence.class).size());
+
+        // 2nd
+        assertEquals(27, JCasUtil.select(readCas.get(1), Token.class).size());
+        assertEquals(9, JCasUtil.select(readCas.get(1), Sentence.class).size());
+
+        // 3rd
+        assertEquals(27, JCasUtil.select(readCas.get(2), Token.class).size());
+        assertEquals(9, JCasUtil.select(readCas.get(2), Sentence.class).size());
+
+        // 4th
+        assertEquals(27, JCasUtil.select(readCas.get(3), Token.class).size());
+        assertEquals(9, JCasUtil.select(readCas.get(3), Sentence.class).size());
+
+        // 5th
+        assertEquals(27, JCasUtil.select(readCas.get(4), Token.class).size());
+        assertEquals(9, JCasUtil.select(readCas.get(4), Sentence.class).size());
+
+        // 6th
+        assertEquals(15, JCasUtil.select(readCas.get(5), Token.class).size());
+        assertEquals(5, JCasUtil.select(readCas.get(5), Sentence.class).size());
     }
 
     @Test
@@ -92,8 +161,10 @@ public class TestLineTokenTagReader
                 "features", "America's...", "http://tinyurl.com/28hd9fu", "#fb", "@MiSS_SOTO", "I",
                 "think", "that", "'s", "when", "I", "'m", "gonna", "be", "there" };
 
-        String [] sentences = new String [] {"Small Biz Tech Tour 2010 Launches Five City Tour MONTCLAIR N.J. ...: The all day event features America's... http://tinyurl.com/28hd9fu #fb", "@MiSS_SOTO I think that 's when I 'm gonna be there"};
-        
+        String[] sentences = new String[] {
+                "Small Biz Tech Tour 2010 Launches Five City Tour MONTCLAIR N.J. ...: The all day event features America's... http://tinyurl.com/28hd9fu #fb",
+                "@MiSS_SOTO I think that 's when I 'm gonna be there" };
+
         AssertAnnotations.assertToken(tokens, select(jcas, Token.class));
         AssertAnnotations.assertSentence(sentences, select(jcas, Sentence.class));
     }
