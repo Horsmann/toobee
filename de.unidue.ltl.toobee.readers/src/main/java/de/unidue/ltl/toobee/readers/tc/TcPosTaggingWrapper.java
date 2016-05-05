@@ -1,6 +1,5 @@
 package de.unidue.ltl.toobee.readers.tc;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -34,7 +33,7 @@ public class TcPosTaggingWrapper
                     sent.getBegin(), sent.getEnd());
             sequence.addToIndexes();
 
-            Collection<Token> tokens = JCasUtil.select(aJCas, Token.class);
+            List<Token> tokens = JCasUtil.selectCovered(aJCas, Token.class, sent);
 
             for (Token token : tokens) {
                 TextClassificationUnit unit = new TextClassificationUnit(aJCas, token.getBegin(),
