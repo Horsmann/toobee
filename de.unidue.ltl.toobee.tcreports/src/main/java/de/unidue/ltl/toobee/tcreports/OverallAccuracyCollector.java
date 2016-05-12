@@ -12,9 +12,7 @@ import org.dkpro.lab.reporting.BatchReportBase;
 import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
-import org.dkpro.tc.core.ml.TCMachineLearningAdapter.AdapterNameEntries;
 import org.dkpro.tc.core.util.ReportConstants;
-import org.dkpro.tc.crfsuite.CRFSuiteAdapter;
 import org.dkpro.tc.crfsuite.task.CRFSuiteTestTask;
 
 public class OverallAccuracyCollector
@@ -32,10 +30,8 @@ public class OverallAccuracyCollector
             if (subcontext.getType().contains(CRFSuiteTestTask.class.getName())) {
                 StorageService storageService = getContext().getStorageService();
 
-                File storageFolder = storageService.locateKey(subcontext.getId(), "");
-                File evaluation = new File(storageFolder,
-                               Constants.RESULTS_FILENAME);
-                writtenFiles.add(evaluation);
+                File id2outcome = storageService.locateKey(subcontext.getId(), Constants.ID_CONTEXT_KEY);
+                writtenFiles.add(id2outcome);
                 break;
             }
         }
