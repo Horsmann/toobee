@@ -44,7 +44,7 @@ public class FileWriter
                     "utf-8"));
         }
         catch (Exception e) {
-            e.printStackTrace();
+            throw new ResourceInitializationException(e);
         }
     }
 
@@ -94,7 +94,7 @@ public class FileWriter
             bfWriter.close();
         }
         catch (IOException e) {
-            e.printStackTrace();
+            throw new AnalysisEngineProcessException(e);
         }
     }
 
