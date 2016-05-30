@@ -141,7 +141,7 @@ public class TestLineTokenTagReader
                 "PRP", "VBP", "DT", "VBZ", "WRB", "PRP", "VBP", "VBG", "VB", "RB" };
 
         String[] expectedCoarse = new String[] { "ADJ", "NP", "NP", "NP", "CARD", "V", "CARD",
-                "NN", "NN", "NP", "NP", "PUNC", "ART", "ART", "NN", "NN", "V", "NP", "O", "O", "O",
+                "NN", "NN", "NP", "NP", "PUNC", "ART", "ART", "NN", "NN", "V", "NP", "POS", "POS", "POS",
                 "PR", "V", "ART", "V", "ADV", "PR", "V", "V", "V", "ADV" };
 
         AssertAnnotations.assertPOS(expectedCoarse, expectedFine, select(jcas, POS.class));
