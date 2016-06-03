@@ -28,7 +28,7 @@ public class ContainsQuoteSymbol
 
     public static boolean contains(String coveredText)
     {
-        return coveredText.contains("\"") || coveredText.contains("'") || coveredText.contains("`");
+        return coveredText.contains("\"") || coveredText.contains(",,") || coveredText.contains("``");
     }
 
 }
