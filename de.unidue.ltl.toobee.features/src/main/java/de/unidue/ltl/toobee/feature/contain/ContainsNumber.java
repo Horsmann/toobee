@@ -5,20 +5,24 @@ import java.util.Set;
 
 import org.apache.uima.jcas.JCas;
 import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
 import org.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationUnit;
 
 public class ContainsNumber
+    extends FeatureExtractorResource_ImplBase
+    implements ClassificationUnitFeatureExtractor
 {
     private final String FEATURE_NAME = "containsNum";
 
-    public Set<Feature> extract(JCas aView,
-            TextClassificationUnit aClassificationUnit)
-            throws TextClassificationException {
+    public Set<Feature> extract(JCas aView, TextClassificationUnit aClassificationUnit)
+        throws TextClassificationException
+    {
 
         boolean contains = contains(aClassificationUnit.getCoveredText());
-        
-        Feature feature = new Feature(FEATURE_NAME, contains  ? 1 : 0);
+
+        Feature feature = new Feature(FEATURE_NAME, contains ? 1 : 0);
         Set<Feature> features = new HashSet<Feature>();
         features.add(feature);
         return features;
@@ -27,16 +31,16 @@ public class ContainsNumber
     static boolean contains(String coveredText)
     {
         Set<Character> chars = new HashSet<>();
-        for(char c : coveredText.toCharArray()){
-        chars.add(c);
+        for (char c : coveredText.toCharArray()) {
+            chars.add(c);
         }
-        
-        for(char c : chars){
-            if(c >= '0' && c <= '9'){
+
+        for (char c : chars) {
+            if (c >= '0' && c <= '9') {
                 return true;
             }
         }
-        
+
         return false;
     }
 }
