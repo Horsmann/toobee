@@ -29,7 +29,7 @@ public class DictionaryTagFeature
     protected String dictionaryLocation;
 
     public static final String PARAM_LOAD_DICT_LOWER_CASE = "dictLowerCase";
-    @ConfigurationParameter(name = PARAM_LOAD_DICT_LOWER_CASE, mandatory = true, defaultValue = "false")
+    @ConfigurationParameter(name = PARAM_LOAD_DICT_LOWER_CASE, mandatory = true, defaultValue = "true")
     private boolean lowerCase;
 
     public static final String FEATURE_NAME = "tag_";
