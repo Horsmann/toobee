@@ -66,6 +66,10 @@ public class LineTokenTagReader
     public static final String PARAM_LANGUAGE = ComponentParameters.PARAM_LANGUAGE;
     @ConfigurationParameter(name = PARAM_LANGUAGE, mandatory = false)
     private String language;
+    
+    public static final String PARAM_LOWER_CASE = "PARAM_LOWER_CASE";
+    @ConfigurationParameter(name = PARAM_LOWER_CASE, mandatory = false, defaultValue="false")
+    private boolean lowerCase;
 
     public static final String PARAM_SEQUENCES_PER_CAS = "PARAM_SEQUENCES_PER_CAS";
     @ConfigurationParameter(name = PARAM_SEQUENCES_PER_CAS, mandatory = true, defaultValue = "1000")
@@ -149,7 +153,11 @@ public class LineTokenTagReader
                 String[] tokenTag = pairs.split(" ");
 
                 int tokenLen = tokenTag[0].length();
-                documentText.append(tokenTag[0]);
+                String t = tokenTag[0];
+                if(lowerCase){
+                    t = t.toLowerCase();
+                }
+                documentText.append(t);
 
                 int tokStart = documentText.length() - tokenLen;
                 int tokEnd = documentText.length();
