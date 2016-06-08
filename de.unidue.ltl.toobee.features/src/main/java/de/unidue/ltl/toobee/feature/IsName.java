@@ -31,7 +31,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
-import org.dkpro.tc.api.type.TextClassificationUnit;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 import org.dkpro.tc.features.tcu.TcuLookUpTable;
 
 public class IsName extends TcuLookUpTable{
@@ -65,7 +65,7 @@ public class IsName extends TcuLookUpTable{
 	    }
 
 	public Set<Feature> extract(JCas aView,
-			TextClassificationUnit aClassificationUnit)
+			TextClassificationTarget aClassificationUnit)
 			throws TextClassificationException {
 		Set<Feature> features = new HashSet<Feature>();
 

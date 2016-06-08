@@ -14,13 +14,13 @@ import java.util.zip.GZIPInputStream;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.dkpro.tc.api.exception.TextClassificationException;
-import org.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
+import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
-import org.dkpro.tc.api.type.TextClassificationUnit;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 
 public class Word2VecEmbeddings extends FeatureExtractorResource_ImplBase
-		implements ClassificationUnitFeatureExtractor {
+		implements FeatureExtractor {
 
 	public static final String PARAM_WORD_EMBEDDINGS = "wordEmbedding";
 	@ConfigurationParameter(name = PARAM_WORD_EMBEDDINGS, mandatory = true)
@@ -38,7 +38,7 @@ public class Word2VecEmbeddings extends FeatureExtractorResource_ImplBase
 	private HashMap<String, String[]> map = null;
 
 	public Set<Feature> extract(JCas aJcas,
-			TextClassificationUnit aClassificationUnit)
+			TextClassificationTarget aClassificationUnit)
 			throws TextClassificationException {
 		init();
 

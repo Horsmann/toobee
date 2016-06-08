@@ -8,13 +8,13 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.dkpro.tc.api.exception.TextClassificationException;
-import org.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
+import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
-import org.dkpro.tc.api.type.TextClassificationUnit;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 
 public class IsCurrencySymbol extends FeatureExtractorResource_ImplBase
-		implements ClassificationUnitFeatureExtractor {
+		implements FeatureExtractor {
 
 	private final String FEATURE_NAME = "isCurrencySymbol";
 
@@ -82,7 +82,7 @@ public class IsCurrencySymbol extends FeatureExtractorResource_ImplBase
 
 	@Override
 	public Set<Feature> extract(JCas view,
-			TextClassificationUnit classificationUnit)
+			TextClassificationTarget classificationUnit)
 					throws TextClassificationException {
 
 		String text = classificationUnit.getCoveredText();

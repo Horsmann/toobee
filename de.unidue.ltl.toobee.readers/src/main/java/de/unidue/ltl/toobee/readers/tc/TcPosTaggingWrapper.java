@@ -9,7 +9,7 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.dkpro.tc.api.type.TextClassificationOutcome;
 import org.dkpro.tc.api.type.TextClassificationSequence;
-import org.dkpro.tc.api.type.TextClassificationUnit;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
@@ -36,7 +36,7 @@ public class TcPosTaggingWrapper
             List<Token> tokens = JCasUtil.selectCovered(aJCas, Token.class, sent);
 
             for (Token token : tokens) {
-                TextClassificationUnit unit = new TextClassificationUnit(aJCas, token.getBegin(),
+                TextClassificationTarget unit = new TextClassificationTarget(aJCas, token.getBegin(),
                         token.getEnd());
                 unit.setId(tcId++);
                 unit.setSuffix(token.getCoveredText());
@@ -51,7 +51,7 @@ public class TcPosTaggingWrapper
         }
     }
 
-    public String getTextClassificationOutcome(JCas jcas, TextClassificationUnit unit)
+    public String getTextClassificationOutcome(JCas jcas, TextClassificationTarget unit)
     {
         List<POS> posList = JCasUtil.selectCovered(jcas, POS.class, unit);
 

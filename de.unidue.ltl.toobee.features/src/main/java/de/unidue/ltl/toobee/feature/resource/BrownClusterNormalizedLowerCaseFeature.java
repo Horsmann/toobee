@@ -15,14 +15,14 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.dkpro.tc.api.exception.TextClassificationException;
-import org.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
+import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
-import org.dkpro.tc.api.type.TextClassificationUnit;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 
 public class BrownClusterNormalizedLowerCaseFeature
     extends FeatureExtractorResource_ImplBase
-    implements ClassificationUnitFeatureExtractor
+    implements FeatureExtractor
 {
 
     public static final String PARAM_BROWN_CLUSTER_CLASS_PROPABILITIES = "brownClassProbLocation";
@@ -48,7 +48,7 @@ public class BrownClusterNormalizedLowerCaseFeature
         return true;
     }
 
-    public Set<Feature> extract(JCas aJcas, TextClassificationUnit aClassificationUnit)
+    public Set<Feature> extract(JCas aJcas, TextClassificationTarget aClassificationUnit)
         throws TextClassificationException
     {
         String unit = aClassificationUnit.getCoveredText().toLowerCase();

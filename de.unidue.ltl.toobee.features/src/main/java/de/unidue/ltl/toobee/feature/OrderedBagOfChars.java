@@ -26,14 +26,14 @@ import java.util.Set;
 import org.apache.uima.jcas.JCas;
 import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
-import org.dkpro.tc.api.type.TextClassificationUnit;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 import org.dkpro.tc.features.tcu.TcuLookUpTable;
 
 public class OrderedBagOfChars extends TcuLookUpTable{
 	public final String FEATURE_NAME = "orderedBoc_";
 	
 	public Set<Feature> extract(JCas aView,
-			TextClassificationUnit aClassificationUnit)
+			TextClassificationTarget aClassificationUnit)
 			throws TextClassificationException {
 		Set<Feature> features = new HashSet<Feature>();
 
