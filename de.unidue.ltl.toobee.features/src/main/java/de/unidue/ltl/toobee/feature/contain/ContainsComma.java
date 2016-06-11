@@ -10,25 +10,32 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class ContainsComma extends FeatureExtractorResource_ImplBase implements
-		FeatureExtractor {
-	private final String FEATURE_NAME = "containsComma";
+public class ContainsComma
+    extends FeatureExtractorResource_ImplBase
+    implements FeatureExtractor
+{
+    private final String FEATURE_NAME = "containsComma";
 
-	public Set<Feature> extract(JCas aView,
-			TextClassificationTarget aClassificationUnit)
-			throws TextClassificationException {
+    public Set<Feature> extract(JCas aView, TextClassificationTarget aClassificationUnit)
+        throws TextClassificationException
+    {
 
-		String text = aClassificationUnit.getCoveredText();
+        String text = aClassificationUnit.getCoveredText();
+        Feature feature;
+        boolean containsComma = containsComma(text);
+        if (containsComma) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
+        Set<Feature> features = new HashSet<Feature>();
+        features.add(feature);
+        return features;
+    }
 
-		boolean containsComma = containsComma(text);
-
-		Feature feature = new Feature(FEATURE_NAME, containsComma ? 1 : 0);
-		Set<Feature> features = new HashSet<Feature>();
-		features.add(feature);
-		return features;
-	}
-
-	public static boolean containsComma(String text) {
-		return text.contains(",");
-	}
+    public static boolean containsComma(String text)
+    {
+        return text.contains(",");
+    }
 }

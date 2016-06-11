@@ -39,7 +39,14 @@ public class IsAllSpecialCharacters
         throws TextClassificationException
     {
         String token = aClassificationUnit.getCoveredText();
-        Feature feature = new Feature(FEATURE_NAME, isAllPunctuation(token) ? 1 : 0);
+        Feature feature;
+        boolean allPunctuation = isAllPunctuation(token);
+        if (allPunctuation) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
         Set<Feature> features = new HashSet<Feature>();
         features.add(feature);

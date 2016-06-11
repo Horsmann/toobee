@@ -21,8 +21,12 @@ public class IsHashtag extends FeatureExtractorResource_ImplBase implements
 		String text = aClassificationUnit.getCoveredText();
 
 		boolean isHash = isHashTag(text);
-
-		Feature feature = new Feature(FEATURE_NAME, isHash ? 1 : 0);
+		Feature feature;
+		if(isHash){
+		    feature = new Feature(FEATURE_NAME, 1);
+		}else{
+		    feature = new Feature(FEATURE_NAME, 0, true);
+		}
 		Set<Feature> features = new HashSet<Feature>();
 		features.add(feature);
 		return features;

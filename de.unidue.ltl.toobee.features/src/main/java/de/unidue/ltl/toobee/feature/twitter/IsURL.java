@@ -21,8 +21,13 @@ public class IsURL extends FeatureExtractorResource_ImplBase implements
 		String text = aClassificationUnit.getCoveredText();
 
 		boolean isURL = isURL(text);
-
 		Feature feature = new Feature(FEATURE_NAME, isURL ? 1 : 0);
+		if(isURL){
+		    feature = new Feature(FEATURE_NAME, 1);
+		}else{
+		    feature = new Feature(FEATURE_NAME, 0, true);
+		}
+		
 		Set<Feature> features = new HashSet<Feature>();
 		features.add(feature);
 		return features;

@@ -93,9 +93,9 @@ public class DictionaryTagFeature
 
         String[] mft = getMostFrequentTag(tokenText);
 
-        features.add(new Feature(FEATURE_NAME + "1", mft[0]));
-        features.add(new Feature(FEATURE_NAME + "2", mft[1]));
-        features.add(new Feature(FEATURE_NAME + "3", mft[2]));
+        features.add(new Feature(FEATURE_NAME + "1", mft[0], mft[0].equals(UNKNOWN)));
+        features.add(new Feature(FEATURE_NAME + "2", mft[1], mft[1].equals(UNKNOWN)));
+        features.add(new Feature(FEATURE_NAME + "3", mft[2], mft[2].equals(UNKNOWN)));
 
         return features;
     }

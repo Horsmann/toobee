@@ -10,26 +10,34 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class IsExclamationMark extends FeatureExtractorResource_ImplBase
-		implements FeatureExtractor {
+public class IsExclamationMark
+    extends FeatureExtractorResource_ImplBase
+    implements FeatureExtractor
+{
 
-	private final String FEATURE_NAME = "isExclamationMark";
+    private final String FEATURE_NAME = "isExclamationMark";
 
-	public Set<Feature> extract(JCas aView,
-			TextClassificationTarget aClassificationUnit)
-			throws TextClassificationException {
+    public Set<Feature> extract(JCas aView, TextClassificationTarget aClassificationUnit)
+        throws TextClassificationException
+    {
 
-		boolean exclamationMark = isExclamationMark(aClassificationUnit
-				.getCoveredText());
-		Feature feature = new Feature(FEATURE_NAME, exclamationMark ? 1 : 0);
+        boolean exclamationMark = isExclamationMark(aClassificationUnit.getCoveredText());
+        Feature feature = new Feature(FEATURE_NAME, exclamationMark ? 1 : 0);
+        if (exclamationMark) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
-		Set<Feature> features = new HashSet<Feature>();
-		features.add(feature);
-		return features;
-	}
+        Set<Feature> features = new HashSet<Feature>();
+        features.add(feature);
+        return features;
+    }
 
-	static boolean isExclamationMark(String aToken) {
-		return aToken.equals("!");
-	}
+    static boolean isExclamationMark(String aToken)
+    {
+        return aToken.equals("!");
+    }
 
 }

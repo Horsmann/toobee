@@ -24,13 +24,14 @@ public class BrownClusterNormalizedLowerCaseFeature
     extends FeatureExtractorResource_ImplBase
     implements FeatureExtractor
 {
+    private static final String NOT_SET = "-1";
 
     public static final String PARAM_BROWN_CLUSTER_CLASS_PROPABILITIES = "brownClassProbLocation";
     @ConfigurationParameter(name = PARAM_BROWN_CLUSTER_CLASS_PROPABILITIES, mandatory = true)
     private File inputFile;
 
     private HashMap<String, String> map = null;
-    
+
     @Override
     public boolean initialize(ResourceSpecifier aSpecifier, Map<String, Object> aAdditionalParams)
         throws ResourceInitializationException
@@ -69,24 +70,24 @@ public class BrownClusterNormalizedLowerCaseFeature
 
         String bitCode = map.get(unit);
 
-        features.add(new Feature("brown16_", bitCode != null && bitCode.length() >= 16 ? bitCode
-                .substring(0, 16) : "*"));
-        features.add(new Feature("brown14_", bitCode != null && bitCode.length() >= 14 ? bitCode
-                .substring(0, 14) : "*"));
-        features.add(new Feature("brown12_", bitCode != null && bitCode.length() >= 12 ? bitCode
-                .substring(0, 12) : "*"));
-        features.add(new Feature("brown10_", bitCode != null && bitCode.length() >= 10 ? bitCode
-                .substring(0, 10) : "*"));
-        features.add(new Feature("brown8_", bitCode != null && bitCode.length() >= 8 ? bitCode
-                .substring(0, 8) : "*"));
-        features.add(new Feature("brown6_", bitCode != null && bitCode.length() >= 6 ? bitCode
-                .substring(0, 6) : "*"));
-        features.add(new Feature("brown4_", bitCode != null && bitCode.length() >= 4 ? bitCode
-                .substring(0, 4) : "*"));
-        features.add(new Feature("brown2_", bitCode != null && bitCode.length() >= 2 ? bitCode
-                .substring(0, 2) : "*"));
+        features.add(getFeature(bitCode, 16));
+        features.add(getFeature(bitCode, 14));
+        features.add(getFeature(bitCode, 12));
+        features.add(getFeature(bitCode, 10));
+        features.add(getFeature(bitCode, 8));
+        features.add(getFeature(bitCode, 6));
+        features.add(getFeature(bitCode, 4));
+        features.add(getFeature(bitCode, 2));
 
         return features;
+    }
+
+    private Feature getFeature(String bitCode, int i)
+    {
+        String value = bitCode != null && bitCode.length() >= 16 ? bitCode.substring(0, i)
+                : NOT_SET;
+        boolean isDummy = value.equals(NOT_SET);
+        return new Feature("brown" + i + "_", value, isDummy);
     }
 
     private void init()
@@ -127,52 +128,51 @@ public class BrownClusterNormalizedLowerCaseFeature
         }
         return new BufferedReader(isr);
     }
-    
-   
-        public static String replaceTwitterPhenomenons(String input, String replacement)
-        {
-            /* Email and atmention are sensitive to order of execution */
-            String workingCopy = input;
-            workingCopy = normalizeUrls(workingCopy, replacement);
-            workingCopy = normalizeEmails(workingCopy, replacement);
-            workingCopy = normalizeAtMentions(workingCopy, replacement);
-            workingCopy = normalizeHashTags(workingCopy, replacement);
-            return workingCopy;
-        }
 
-        public static String normalizeHashTags(String input, String replacement)
-        {
-            String HASHTAG = "#[a-zA-Z0-9-_]+";
-            String normalized = input.replaceAll(HASHTAG, replacement);
-            return normalized;
-        }
+    public static String replaceTwitterPhenomenons(String input, String replacement)
+    {
+        /* Email and atmention are sensitive to order of execution */
+        String workingCopy = input;
+        workingCopy = normalizeUrls(workingCopy, replacement);
+        workingCopy = normalizeEmails(workingCopy, replacement);
+        workingCopy = normalizeAtMentions(workingCopy, replacement);
+        workingCopy = normalizeHashTags(workingCopy, replacement);
+        return workingCopy;
+    }
 
-        public static String normalizeEmails(String input, String replacement)
-        {
-            String PREFIX = "[a-zA-Z0-9-_\\.]+";
-            String SUFFIX = "[a-zA-Z0-9-_]+";
+    public static String normalizeHashTags(String input, String replacement)
+    {
+        String HASHTAG = "#[a-zA-Z0-9-_]+";
+        String normalized = input.replaceAll(HASHTAG, replacement);
+        return normalized;
+    }
 
-            String EMAIL_REGEX = PREFIX + "@" + SUFFIX + "\\." + "[a-zA-Z]+";
-            String normalize = input.replaceAll(EMAIL_REGEX, replacement);
-            return normalize;
-        }
+    public static String normalizeEmails(String input, String replacement)
+    {
+        String PREFIX = "[a-zA-Z0-9-_\\.]+";
+        String SUFFIX = "[a-zA-Z0-9-_]+";
 
-        public static String normalizeAtMentions(String input, String replacement)
-        {
-            String AT_MENTION_REGEX = "@[a-zA-Z0-9_-]+";
-            String normalize = input.replaceAll(AT_MENTION_REGEX, replacement);
-            return normalize;
-        }
+        String EMAIL_REGEX = PREFIX + "@" + SUFFIX + "\\." + "[a-zA-Z]+";
+        String normalize = input.replaceAll(EMAIL_REGEX, replacement);
+        return normalize;
+    }
 
-        public static String normalizeUrls(String input, String replacement)
-        {
-            String URL_CORE_REGEX = "[\\/\\\\.a-zA-Z0-9-_]+";
+    public static String normalizeAtMentions(String input, String replacement)
+    {
+        String AT_MENTION_REGEX = "@[a-zA-Z0-9_-]+";
+        String normalize = input.replaceAll(AT_MENTION_REGEX, replacement);
+        return normalize;
+    }
 
-            String normalized = input.replaceAll("http:" + URL_CORE_REGEX, replacement);
-            normalized = normalized.replaceAll("https:" + URL_CORE_REGEX, replacement);
-            normalized = normalized.replaceAll("www\\." + URL_CORE_REGEX, replacement);
+    public static String normalizeUrls(String input, String replacement)
+    {
+        String URL_CORE_REGEX = "[\\/\\\\.a-zA-Z0-9-_]+";
 
-            return normalized;
-        }
+        String normalized = input.replaceAll("http:" + URL_CORE_REGEX, replacement);
+        normalized = normalized.replaceAll("https:" + URL_CORE_REGEX, replacement);
+        normalized = normalized.replaceAll("www\\." + URL_CORE_REGEX, replacement);
+
+        return normalized;
+    }
 
 }

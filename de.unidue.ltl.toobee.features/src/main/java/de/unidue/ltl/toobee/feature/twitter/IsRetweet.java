@@ -10,26 +10,35 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class IsRetweet extends FeatureExtractorResource_ImplBase implements
-		FeatureExtractor {
-	private final String FEATURE_NAME = "isRetweet";
+public class IsRetweet
+    extends FeatureExtractorResource_ImplBase
+    implements FeatureExtractor
+{
+    private final String FEATURE_NAME = "isRetweet";
 
-	public Set<Feature> extract(JCas aView,
-			TextClassificationTarget aClassificationUnit)
-			throws TextClassificationException {
+    public Set<Feature> extract(JCas aView, TextClassificationTarget aClassificationUnit)
+        throws TextClassificationException
+    {
 
-		String text = aClassificationUnit.getCoveredText();
+        String text = aClassificationUnit.getCoveredText();
 
-		boolean isRetweet = isRetweet(text);
+        boolean isRetweet = isRetweet(text);
+        Feature feature;
+        if (isRetweet) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
-		Feature feature = new Feature(FEATURE_NAME, isRetweet ? 1 : 0);
-		Set<Feature> features = new HashSet<Feature>();
-		features.add(feature);
-		return features;
-	}
+        Set<Feature> features = new HashSet<Feature>();
+        features.add(feature);
+        return features;
+    }
 
-	public static boolean isRetweet(String text) {
-		return text.equals("RT");
-	}
+    public static boolean isRetweet(String text)
+    {
+        return text.equals("RT");
+    }
 
 }

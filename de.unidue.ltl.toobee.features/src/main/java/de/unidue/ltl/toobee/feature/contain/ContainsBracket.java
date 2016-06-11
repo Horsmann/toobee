@@ -26,7 +26,12 @@ public class ContainsBracket
         boolean b = contains(text);
 
         Set<Feature> features = new HashSet<Feature>();
-        features.add(new Feature(FEATURE_NAME, b ? 1 : 0));
+        if (b) {
+            features.add(new Feature(FEATURE_NAME, 1));
+        }
+        else {
+            features.add(new Feature(FEATURE_NAME, 0, true));
+        }
 
         return features;
     }
