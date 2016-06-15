@@ -28,7 +28,7 @@ public class IsTripleDot extends FeatureExtractorResource_ImplBase implements
 	}
 
 	static boolean isTrippleDot(String aToken) {
-		return aToken.equals("…");
+		return aToken.equals("…") || aToken.equals("...");
 	}
 
 }

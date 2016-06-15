@@ -8,7 +8,7 @@ public class TestContainsSpecialCharacter {
 
 	@Test
 	public void runTest(){
-		assertTrue(ContainsSpecialCharacter.contains("?"));
+		assertTrue(ContainsSpecialCharacter.contains("as?d"));
 		assertTrue(ContainsSpecialCharacter.contains(","));
 		assertTrue(ContainsSpecialCharacter.contains("!"));
 		assertTrue(ContainsSpecialCharacter.contains("."));

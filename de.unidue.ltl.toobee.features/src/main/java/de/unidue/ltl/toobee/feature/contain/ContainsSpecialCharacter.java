@@ -31,7 +31,7 @@ public class ContainsSpecialCharacter extends FeatureExtractorResource_ImplBase
 
     public static boolean contains(String text)
     {
-        return text.matches("[^a-zA-Z0-9]+");
+        return text.matches(".*[^a-zA-Z0-9]+.*");
     }
 
 }

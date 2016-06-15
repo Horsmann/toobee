@@ -1,4 +1,4 @@
-package de.unidue.ltl.toobee.feature.is;
+package de.unidue.ltl.toobee.feature.contain;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,27 +10,38 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class IsQuote
+public class ContainsSeveralHyphen
     extends FeatureExtractorResource_ImplBase
     implements FeatureExtractor
 {
-    private final String FEATURE_NAME = "isQuote";
+    private final String FEATURE_NAME = "containsSeveralHyphen";
 
     public Set<Feature> extract(JCas aView, TextClassificationTarget aClassificationUnit)
         throws TextClassificationException
     {
 
-        boolean b = is(aClassificationUnit.getCoveredText());
-        Feature feature = new Feature(FEATURE_NAME, b ? 1 : 0);
+        boolean hasMoreThanOneHypen = has(aClassificationUnit.getCoveredText());
 
+        Feature feature;
+        if (hasMoreThanOneHypen) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
         Set<Feature> features = new HashSet<Feature>();
         features.add(feature);
         return features;
     }
 
-    static boolean is(String aToken)
+    static boolean has(String coveredText)
     {
-        return aToken.equals("\"") || aToken.equals(",") || aToken.equals("`")|| aToken.equals("'");
-    }
+        int num = 0;
 
+        for (char c : coveredText.toCharArray()) {
+            num += (c == '-') ? 1 : 0;
+        }
+
+        return num >= 2;
+    }
 }
