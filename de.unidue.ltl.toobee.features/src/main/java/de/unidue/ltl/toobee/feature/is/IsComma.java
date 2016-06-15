@@ -10,26 +10,34 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class IsComma extends FeatureExtractorResource_ImplBase
-		implements FeatureExtractor {
+public class IsComma
+    extends FeatureExtractorResource_ImplBase
+    implements FeatureExtractor
+{
 
-	private final String FEATURE_NAME = "isComma";
+    private final String FEATURE_NAME = "isComma";
 
-	public Set<Feature> extract(JCas aView,
-			TextClassificationTarget aClassificationUnit)
-			throws TextClassificationException {
+    public Set<Feature> extract(JCas aView, TextClassificationTarget aClassificationUnit)
+        throws TextClassificationException
+    {
 
-		boolean eval = is(aClassificationUnit
-				.getCoveredText());
-		Feature feature = new Feature(FEATURE_NAME, eval ? 1 : 0);
+        boolean eval = is(aClassificationUnit.getCoveredText());
+        Feature feature;
+        if (eval) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
-		Set<Feature> features = new HashSet<Feature>();
-		features.add(feature);
-		return features;
-	}
+        Set<Feature> features = new HashSet<Feature>();
+        features.add(feature);
+        return features;
+    }
 
-	static boolean is(String aToken) {
-		return aToken.equals(",");
-	}
+    static boolean is(String aToken)
+    {
+        return aToken.equals(",");
+    }
 
 }

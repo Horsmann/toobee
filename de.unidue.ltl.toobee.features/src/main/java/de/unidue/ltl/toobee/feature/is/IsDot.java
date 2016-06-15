@@ -20,7 +20,12 @@ public class IsDot extends FeatureExtractorResource_ImplBase implements
 			throws TextClassificationException {
 
 		boolean dot = isDot(aClassificationUnit.getCoveredText());
-		Feature feature = new Feature(FEATURE_NAME, dot ? 1 : 0);
+		Feature feature; 
+		if(dot){
+		    feature = new Feature(FEATURE_NAME, 1);
+		}else{
+		    feature = new Feature(FEATURE_NAME, 0, true);
+		}
 
 		Set<Feature> features = new HashSet<Feature>();
 		features.add(feature);

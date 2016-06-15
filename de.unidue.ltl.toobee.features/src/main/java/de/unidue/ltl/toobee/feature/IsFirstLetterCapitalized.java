@@ -39,7 +39,13 @@ public class IsFirstLetterCapitalized
     {
         String token = aClassificationUnit.getCoveredText();
         boolean flc = firstLetterCapitalized(token);
-        Feature feature = new Feature(FEATURE_NAME, flc ? 1 : 0);
+        Feature feature;
+        if (flc) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
         Set<Feature> features = new HashSet<Feature>();
         features.add(feature);
@@ -48,10 +54,10 @@ public class IsFirstLetterCapitalized
 
     static boolean firstLetterCapitalized(String aCoveredText)
     {
-        if (aCoveredText.isEmpty()){
+        if (aCoveredText.isEmpty()) {
             return false;
         }
-        
+
         return Character.isUpperCase(aCoveredText.charAt(0));
     }
 

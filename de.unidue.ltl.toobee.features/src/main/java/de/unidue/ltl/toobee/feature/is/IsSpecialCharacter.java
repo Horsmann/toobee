@@ -10,24 +10,32 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class IsSpecialCharacter extends FeatureExtractorResource_ImplBase
-		implements FeatureExtractor {
+public class IsSpecialCharacter
+    extends FeatureExtractorResource_ImplBase
+    implements FeatureExtractor
+{
 
-	private final String FEATURE_NAME = "isSpecialChar";
+    private final String FEATURE_NAME = "isSpecialChar";
 
-	@Override
-	public Set<Feature> extract(JCas view,
-			TextClassificationTarget classificationUnit)
-					throws TextClassificationException {
+    @Override
+    public Set<Feature> extract(JCas view, TextClassificationTarget classificationUnit)
+        throws TextClassificationException
+    {
 
-		String text = classificationUnit.getCoveredText();
-		boolean b = is(text);
-		
-		Set<Feature> features = new HashSet<Feature>();
-		features.add(new Feature(FEATURE_NAME,b ? 1 :0));
-		
-		return features;
-	}
+        String text = classificationUnit.getCoveredText();
+        boolean b = is(text);
+        Feature feature;
+        if (b) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
+
+        Set<Feature> features = new HashSet<Feature>();
+        features.add(feature);
+        return features;
+    }
 
     public static boolean is(String text)
     {

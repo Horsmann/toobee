@@ -10,26 +10,35 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class IsUserMention extends FeatureExtractorResource_ImplBase implements
-		FeatureExtractor {
-	private final String FEATURE_NAME = "startsWithAtCharacter";
+public class IsUserMention
+    extends FeatureExtractorResource_ImplBase
+    implements FeatureExtractor
+{
+    private final String FEATURE_NAME = "startsWithAtCharacter";
 
-	public Set<Feature> extract(JCas aView,
-			TextClassificationTarget aClassificationUnit)
-			throws TextClassificationException {
+    public Set<Feature> extract(JCas aView, TextClassificationTarget aClassificationUnit)
+        throws TextClassificationException
+    {
 
-		String text = aClassificationUnit.getCoveredText();
+        String text = aClassificationUnit.getCoveredText();
 
-		boolean isUserMention = isUserMention(text);
+        boolean isUserMention = isUserMention(text);
+        Feature feature = new Feature(FEATURE_NAME, isUserMention ? 1 : 0);
+        if (isUserMention) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
-		Feature feature = new Feature(FEATURE_NAME, isUserMention ? 1 : 0);
-		Set<Feature> features = new HashSet<Feature>();
-		features.add(feature);
-		return features;
-	}
+        Set<Feature> features = new HashSet<Feature>();
+        features.add(feature);
+        return features;
+    }
 
-	public static boolean isUserMention(String text) {
-		return text.startsWith("@");
-	}
+    public static boolean isUserMention(String text)
+    {
+        return text.startsWith("@");
+    }
 
 }

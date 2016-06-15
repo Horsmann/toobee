@@ -19,10 +19,15 @@ public class ContainsNumber
     public Set<Feature> extract(JCas aView, TextClassificationTarget aClassificationUnit)
         throws TextClassificationException
     {
-
+        Feature feature;
         boolean contains = contains(aClassificationUnit.getCoveredText());
+        if (contains) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
-        Feature feature = new Feature(FEATURE_NAME, contains ? 1 : 0);
         Set<Feature> features = new HashSet<Feature>();
         features.add(feature);
         return features;

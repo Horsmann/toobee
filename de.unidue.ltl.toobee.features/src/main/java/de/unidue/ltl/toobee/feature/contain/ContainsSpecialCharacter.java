@@ -10,24 +10,32 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class ContainsSpecialCharacter extends FeatureExtractorResource_ImplBase
-		implements FeatureExtractor {
+public class ContainsSpecialCharacter
+    extends FeatureExtractorResource_ImplBase
+    implements FeatureExtractor
+{
 
-	private final String FEATURE_NAME = "containsSpecialChar";
+    private final String FEATURE_NAME = "containsSpecialChar";
 
-	@Override
-	public Set<Feature> extract(JCas view,
-			TextClassificationTarget classificationUnit)
-					throws TextClassificationException {
+    @Override
+    public Set<Feature> extract(JCas view, TextClassificationTarget classificationUnit)
+        throws TextClassificationException
+    {
 
-		String text = classificationUnit.getCoveredText();
-		boolean b = contains(text);
-		
-		Set<Feature> features = new HashSet<Feature>();
-		features.add(new Feature(FEATURE_NAME,b ? 1 :0));
-		
-		return features;
-	}
+        String text = classificationUnit.getCoveredText();
+        boolean b = contains(text);
+        Feature feature;
+        if (b) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
+
+        Set<Feature> features = new HashSet<Feature>();
+        features.add(feature);
+        return features;
+    }
 
     public static boolean contains(String text)
     {

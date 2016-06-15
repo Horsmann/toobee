@@ -39,7 +39,14 @@ public class IsSmiley
         throws TextClassificationException
     {
         String token = aClassificationUnit.getCoveredText();
-        Feature feature = new Feature(FEATURE_NAME, isSmiley(token) ? 1 : 0);
+        boolean isSmiley = isSmiley(token);
+        Feature feature;
+        if (isSmiley) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
         Set<Feature> features = new HashSet<Feature>();
         features.add(feature);
@@ -48,48 +55,52 @@ public class IsSmiley
 
     static boolean isSmiley(String u)
     {
-    	if(isFwd3ElementSmiley(u)){
-    		return true;
-    	}
-    	
-    	if(isBckwd3ElementSmiley(u)){
-    		return true;
-    	}
-    	
-    	if(isFwd2ElementSmiley(u)){
-    		return true;
-    	}
-    	
-    	if(isBckwd2ElementSmiley(u)){
-    		return true;
-    	} 	
-    	
-    	if(isHorizontalSmiley(u)){
-    		return true;
-    	}
-    	
-        
+        if (isFwd3ElementSmiley(u)) {
+            return true;
+        }
+
+        if (isBckwd3ElementSmiley(u)) {
+            return true;
+        }
+
+        if (isFwd2ElementSmiley(u)) {
+            return true;
+        }
+
+        if (isBckwd2ElementSmiley(u)) {
+            return true;
+        }
+
+        if (isHorizontalSmiley(u)) {
+            return true;
+        }
+
         return false;
     }
 
-	private static boolean isHorizontalSmiley(String u) {
-		return Pattern.matches("[<>\\(\\)\\-\"='\\*oO0]+[\\.]*[<>\\(\\)\\-\"='\\*oO0]+",u);
-	}
+    private static boolean isHorizontalSmiley(String u)
+    {
+        return Pattern.matches("[<>\\(\\)\\-\"='\\*oO0]+[\\.]*[<>\\(\\)\\-\"='\\*oO0]+", u);
+    }
 
-	private static boolean isBckwd2ElementSmiley(String u) {
-		return Pattern.matches("[dDpP\\)\\(\\[\\]][:;xX8]", u);
-	}
+    private static boolean isBckwd2ElementSmiley(String u)
+    {
+        return Pattern.matches("[dDpP\\)\\(\\[\\]][:;xX8]", u);
+    }
 
-	private static boolean isBckwd3ElementSmiley(String u) {
-		return Pattern.matches("[dDpP\\)\\(\\[\\]]+[\\-oO][:;xX8]",u);
-	}
+    private static boolean isBckwd3ElementSmiley(String u)
+    {
+        return Pattern.matches("[dDpP\\)\\(\\[\\]]+[\\-oO][:;xX8]", u);
+    }
 
-	private static boolean isFwd3ElementSmiley(String u) {
-		return Pattern.matches("[:;xX8][\\-oO][dDpP\\)\\(\\[\\]]+",u);
-	}
+    private static boolean isFwd3ElementSmiley(String u)
+    {
+        return Pattern.matches("[:;xX8][\\-oO][dDpP\\)\\(\\[\\]]+", u);
+    }
 
-	private static boolean isFwd2ElementSmiley(String u) {
-		return Pattern.matches("[:;xX8][dDpP\\)\\(\\[\\]]", u);
-	}
+    private static boolean isFwd2ElementSmiley(String u)
+    {
+        return Pattern.matches("[:;xX8][dDpP\\)\\(\\[\\]]", u);
+    }
 
 }

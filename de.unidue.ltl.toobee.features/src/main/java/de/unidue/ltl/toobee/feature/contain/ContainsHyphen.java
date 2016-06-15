@@ -10,18 +10,28 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class ContainsHyphen extends FeatureExtractorResource_ImplBase implements
-		FeatureExtractor {
-	private final String FEATURE_NAME = "containsHyphen";
+public class ContainsHyphen
+    extends FeatureExtractorResource_ImplBase
+    implements FeatureExtractor
+{
+    private final String FEATURE_NAME = "containsHyphen";
 
-	public Set<Feature> extract(JCas aView,
-			TextClassificationTarget aClassificationUnit)
-			throws TextClassificationException {
+    public Set<Feature> extract(JCas aView, TextClassificationTarget aClassificationUnit)
+        throws TextClassificationException
+    {
 
-		Feature feature = new Feature(FEATURE_NAME, aClassificationUnit
-				.getCoveredText().contains("-") ? 1 : 0);
-		Set<Feature> features = new HashSet<Feature>();
-		features.add(feature);
-		return features;
-	}
+        boolean contains = aClassificationUnit.getCoveredText().contains("-");
+
+        Feature feature;
+
+        if (contains) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
+        Set<Feature> features = new HashSet<Feature>();
+        features.add(feature);
+        return features;
+    }
 }

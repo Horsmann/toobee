@@ -38,7 +38,14 @@ public class ContainsCapitalLetter
         throws TextClassificationException
     {
         String token = aClassificationUnit.getCoveredText();
-        Feature feature = new Feature(FEATURE_NAME, anyLetterCapitalized(token) ? 1 : 0);
+        boolean anyLetterCapitalized = anyLetterCapitalized(token);
+        Feature feature;
+        if (anyLetterCapitalized) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
         Set<Feature> features = new HashSet<Feature>();
         features.add(feature);
@@ -47,16 +54,16 @@ public class ContainsCapitalLetter
 
     public static boolean anyLetterCapitalized(String aCoveredText)
     {
-        if (aCoveredText.isEmpty()){
+        if (aCoveredText.isEmpty()) {
             return false;
         }
-        
-        for (char c : aCoveredText.toCharArray()){
-        	if (Character.isUpperCase(c)){
-        		return true;
-        	}
+
+        for (char c : aCoveredText.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                return true;
+            }
         }
-        
+
         return false;
     }
 
