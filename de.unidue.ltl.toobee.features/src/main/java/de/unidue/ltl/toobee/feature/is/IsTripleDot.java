@@ -10,25 +10,35 @@ import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class IsTripleDot extends FeatureExtractorResource_ImplBase implements
-		FeatureExtractor {
+public class IsTripleDot
+    extends FeatureExtractorResource_ImplBase
+    implements FeatureExtractor
+{
 
-	private final String FEATURE_NAME = "isTripleDot";
+    private final String FEATURE_NAME = "isTripleDot";
 
-	public Set<Feature> extract(JCas aView,
-			TextClassificationTarget aClassificationUnit)
-			throws TextClassificationException {
+    public Set<Feature> extract(JCas aView, TextClassificationTarget aClassificationUnit)
+        throws TextClassificationException
+    {
 
-		boolean b = isTrippleDot(aClassificationUnit.getCoveredText());
-		Feature feature = new Feature(FEATURE_NAME, b ? 1 : 0);
+        boolean b = isTrippleDot(aClassificationUnit.getCoveredText());
+        Feature feature;
 
-		Set<Feature> features = new HashSet<Feature>();
-		features.add(feature);
-		return features;
-	}
+        if (b) {
+            feature = new Feature(FEATURE_NAME, 1);
+        }
+        else {
+            feature = new Feature(FEATURE_NAME, 0, true);
+        }
 
-	static boolean isTrippleDot(String aToken) {
-		return aToken.equals("…") || aToken.equals("...");
-	}
+        Set<Feature> features = new HashSet<Feature>();
+        features.add(feature);
+        return features;
+    }
+
+    static boolean isTrippleDot(String aToken)
+    {
+        return aToken.equals("…") || aToken.equals("...");
+    }
 
 }
