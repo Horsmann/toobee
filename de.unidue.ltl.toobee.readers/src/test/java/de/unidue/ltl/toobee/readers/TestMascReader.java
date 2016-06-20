@@ -50,8 +50,8 @@ public class TestMascReader
         String[] expectedFine = new String[] { "NNS", "VBP", "RB", "VBN", "RB", "RB", "IN", "TO",
                 "VB", "IN", "DT", "NN", "IN", "DT", "NN", "." };
 
-        String[] expectedCoarse = new String[] { "NN", "V", "ADV", "V", "ADV", "ADV", "PP", "PP",
-                "V", "PP", "ART", "NN", "PP", "ART", "NN", "PUNC" };
+        String[] expectedCoarse = new String[] { "NOUN", "VERB", "ADV", "VERB", "ADV", "ADV", "ADP", "ADP",
+                "VERB", "ADP", "DET", "NOUN", "ADP", "DET", "NOUN", "PUNCT" };
 
         AssertAnnotations.assertPOS(expectedCoarse, expectedFine, select(jcas, POS.class));
     }
