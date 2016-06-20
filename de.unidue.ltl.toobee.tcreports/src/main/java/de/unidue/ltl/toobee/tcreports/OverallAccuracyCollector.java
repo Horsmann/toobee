@@ -33,7 +33,7 @@ public class OverallAccuracyCollector
             if (subcontext.getType().contains("TestTask")) {
                 StorageService storageService = getContext().getStorageService();
 
-                File id2outcome = storageService.locateKey(subcontext.getId(), Constants.ID_CONTEXT_KEY);
+                File id2outcome = storageService.locateKey(subcontext.getId(), Constants.ID_OUTCOME_KEY);
                 Id2Outcome o = new Id2Outcome(id2outcome, Constants.LM_SINGLE_LABEL);
                 EvaluatorBase createEvaluator = EvaluatorFactory.createEvaluator(o, true, false);
                 Double acc = createEvaluator.calculateEvaluationMeasures().get(Accuracy.class.getSimpleName());
