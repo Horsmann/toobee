@@ -84,10 +84,12 @@ public class BrownClusterNormalizedLowerCaseFeature
 
     private Feature getFeature(String bitCode, int i)
     {
-        String value = bitCode != null && bitCode.length() >= 16 ? bitCode.substring(0, i)
-                : NOT_SET;
-        boolean isDummy = value.equals(NOT_SET);
-        return new Feature("brown_" + i , value, isDummy);
+        if(bitCode == null || bitCode.isEmpty()){
+            return new Feature("brown_" + i , NOT_SET, true);
+        }
+        
+        String value = bitCode.length() >= i ? bitCode.substring(0, i) : NOT_SET; 
+        return new Feature("brown_" + i , value, value.equals(NOT_SET));
     }
 
     private void init()
