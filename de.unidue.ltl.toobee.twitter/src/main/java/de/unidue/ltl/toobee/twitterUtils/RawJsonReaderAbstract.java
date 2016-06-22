@@ -91,7 +91,13 @@ public abstract class RawJsonReaderAbstract extends JCasResourceCollectionReader
         // we test for a 'text'-information and the 'created_at' information if
         // we find both we
         // conclude that a line is an actual twitter message
-        return nextLine.contains(CREATE_MARKER) && nextLine.contains(TEXT_MARKER);
+        return nextLine.contains(CREATE_MARKER) && nextLine.contains(TEXT_MARKER) && !isTrashContent(nextLine);
+    }
+
+    private boolean isTrashContent(String nextLine2)
+    {
+        String extract = getExtract(nextLine, TEXT_MARKER, MARKER_END);
+        return StringEscapeUtils.unescapeJava(extract).length() < 3; 
     }
 
     public Progress[] getProgress()

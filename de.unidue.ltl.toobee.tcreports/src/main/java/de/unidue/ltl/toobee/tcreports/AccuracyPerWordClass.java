@@ -13,7 +13,6 @@ import org.dkpro.lab.reporting.BatchReportBase;
 import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
-import org.dkpro.tc.crfsuite.task.CRFSuiteTestTask;
 
 public class AccuracyPerWordClass
     extends BatchReportBase
@@ -29,7 +28,7 @@ public class AccuracyPerWordClass
     {
 
         for (TaskContextMetadata subcontext : getSubtasks()) {
-            if (subcontext.getType().contains(CRFSuiteTestTask.class.getName())) {
+            if (subcontext.getType().contains("TestTask")) {
                 StorageService storageService = getContext().getStorageService();
                 File locateKey = storageService.locateKey(subcontext.getId(),
                         Constants.ID_OUTCOME_KEY);

@@ -13,7 +13,10 @@ import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
 import org.dkpro.tc.core.util.ReportConstants;
-import org.dkpro.tc.crfsuite.task.CRFSuiteTestTask;
+import org.dkpro.tc.evaluation.Id2Outcome;
+import org.dkpro.tc.evaluation.evaluator.EvaluatorBase;
+import org.dkpro.tc.evaluation.evaluator.EvaluatorFactory;
+import org.dkpro.tc.evaluation.measures.label.Accuracy;
 
 public class OverallAccuracyCollector
     extends BatchReportBase
@@ -27,10 +30,17 @@ public class OverallAccuracyCollector
     {
 
         for (TaskContextMetadata subcontext : getSubtasks()) {
-            if (subcontext.getType().contains(CRFSuiteTestTask.class.getName())) {
+            if (subcontext.getType().contains("TestTask")) {
                 StorageService storageService = getContext().getStorageService();
 
-                File id2outcome = storageService.locateKey(subcontext.getId(), Constants.ID_CONTEXT_KEY);
+                File id2outcome = storageService.locateKey(subcontext.getId(), Constants.ID_OUTCOME_KEY);
+                Id2Outcome o = new Id2Outcome(id2outcome, Constants.LM_SINGLE_LABEL);
+                EvaluatorBase createEvaluator = EvaluatorFactory.createEvaluator(o, true, false);
+                Double acc = createEvaluator.calculateEvaluationMeasures().get(Accuracy.class.getSimpleName());
+                
+                File locateKey = storageService.locateKey(subcontext.getId(), "accuracy.txt");
+                FileUtils.write(locateKey, acc.toString());
+                
                 writtenFiles.add(id2outcome);
                 break;
             }
