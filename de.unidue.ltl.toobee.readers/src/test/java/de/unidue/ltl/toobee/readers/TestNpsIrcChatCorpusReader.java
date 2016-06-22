@@ -44,7 +44,7 @@ public class TestNpsIrcChatCorpusReader {
 		reader.getNext(jcas.getCas());
 
 		String[] expectedFine = new String[] { "UH", "DT", "NNS", "^VBP","VB", "."};
-		String[] expectedCoarse = new String[] { "X", "DET", "NOUN", "POS", "VERB", "PUNCT"};
+		String[] expectedCoarse = new String[] { "INTJ", "DET", "NOUN", "POS", "VERB", "PUNCT"};
 		AssertAnnotations.assertPOS(expectedCoarse, expectedFine, select(jcas, POS.class));
 		
 		jcas = JCasFactory.createJCas();
