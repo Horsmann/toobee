@@ -24,10 +24,10 @@ public class BrownClusterNormalizedLowerCaseFeature
     extends FeatureExtractorResource_ImplBase
     implements FeatureExtractor
 {
-    private static final String NOT_SET = "-1";
+    private static final String NOT_SET = "*";
 
-    public static final String PARAM_BROWN_CLUSTER_CLASS_PROPABILITIES = "brownClassProbLocation";
-    @ConfigurationParameter(name = PARAM_BROWN_CLUSTER_CLASS_PROPABILITIES, mandatory = true)
+    public static final String PARAM_BROWN_CLUSTERS_LOCATION = "brownClusterLocations";
+    @ConfigurationParameter(name = PARAM_BROWN_CLUSTERS_LOCATION, mandatory = true)
     private File inputFile;
 
     private HashMap<String, String> map = null;
@@ -87,7 +87,7 @@ public class BrownClusterNormalizedLowerCaseFeature
         String value = bitCode != null && bitCode.length() >= 16 ? bitCode.substring(0, i)
                 : NOT_SET;
         boolean isDummy = value.equals(NOT_SET);
-        return new Feature("brown" + i + "_", value, isDummy);
+        return new Feature("brown_" + i , value, isDummy);
     }
 
     private void init()
