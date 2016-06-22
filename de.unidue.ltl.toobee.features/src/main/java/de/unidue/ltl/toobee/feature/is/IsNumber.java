@@ -41,7 +41,9 @@ public class IsNumber
 
     static boolean isDotCommaSeparatedNum(String coveredText)
     {
-        return isPure(coveredText.replaceAll(",", "").replaceAll("\\.", ""));
+        
+        String value = coveredText.replaceAll(",", "").replaceAll("\\.", "");
+        return isPure(value) && !value.isEmpty();
     }
 
     static boolean isTime(String coveredText)
