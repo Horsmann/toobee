@@ -28,8 +28,6 @@ import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-import com.vdurmont.emoji.EmojiParser;
-
 public class IsEmoticon
     extends FeatureExtractorResource_ImplBase
     implements FeatureExtractor
