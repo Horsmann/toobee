@@ -28,7 +28,7 @@ import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class IsSmiley
+public class IsEmoticon
     extends FeatureExtractorResource_ImplBase
     implements FeatureExtractor
 {
@@ -39,7 +39,7 @@ public class IsSmiley
         throws TextClassificationException
     {
         String token = aClassificationUnit.getCoveredText();
-        boolean isSmiley = isSmiley(token);
+        boolean isSmiley = isEmoticon(token);
         Feature feature;
         if (isSmiley) {
             feature = new Feature(FEATURE_NAME, 1);
@@ -53,7 +53,7 @@ public class IsSmiley
         return features;
     }
 
-    static boolean isSmiley(String u)
+    static boolean isEmoticon(String u)
     {
         if (isFwd3ElementSmiley(u)) {
             return true;
@@ -80,7 +80,7 @@ public class IsSmiley
 
     private static boolean isHorizontalSmiley(String u)
     {
-        return Pattern.matches("[<>\\(\\)\\-\"='\\*oO0]+[\\.]*[<>\\(\\)\\-\"='\\*oO0]+", u);
+        return Pattern.matches("[<>\\(\\)\\-\"='\\*oO0]+[\\._]*[<>\\(\\)\\-\"='\\*oO0]+", u);
     }
 
     private static boolean isBckwd2ElementSmiley(String u)
@@ -95,12 +95,12 @@ public class IsSmiley
 
     private static boolean isFwd3ElementSmiley(String u)
     {
-        return Pattern.matches("[:;xX8][\\-oO][dDpP\\)\\(\\[\\]]+", u);
+        return Pattern.matches("[:;xX8][\\-oO][dDpP\\)\\(\\[\\]\\\\/\\\\]+", u);
     }
 
     private static boolean isFwd2ElementSmiley(String u)
     {
-        return Pattern.matches("[:;xX8][dDpP\\)\\(\\[\\]]", u);
+        return Pattern.matches("[:;xX8][dDpPcx\\)\\(\\[\\]]", u);
     }
 
 }
