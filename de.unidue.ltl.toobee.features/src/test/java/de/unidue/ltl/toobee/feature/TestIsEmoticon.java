@@ -64,9 +64,24 @@ public class TestIsEmoticon {
 	}
 	
 	@Test
+	public void isSurrogateEmoji(){
+	    assertTrue(IsEmoticon.isEmoticon("😆"));
+	    assertTrue(IsEmoticon.isEmoticon("😛"));
+	    assertTrue(IsEmoticon.isEmoticon("🐺"));
+	    assertTrue(IsEmoticon.isEmoticon("🤑"));
+	    assertTrue(IsEmoticon.isEmoticon("💩"));
+	}
+	
+	@Test
 	public void isHorizontalEmoticon(){
+	    assertTrue(IsEmoticon.isEmoticon("^^"));
 		assertTrue(IsEmoticon.isEmoticon("-.-"));
 		assertTrue(IsEmoticon.isEmoticon("*.*'"));
+		assertTrue(IsEmoticon.isEmoticon("0.o"));
+		assertTrue(IsEmoticon.isEmoticon("O.o"));
+		assertTrue(IsEmoticon.isEmoticon("o.o"));
+		assertTrue(IsEmoticon.isEmoticon("o.O"));
+		assertTrue(IsEmoticon.isEmoticon("o.0"));
 		assertTrue(IsEmoticon.isEmoticon("*.*"));
 		assertTrue(IsEmoticon.isEmoticon("*_*"));
 		assertTrue(IsEmoticon.isEmoticon("=.=\""));

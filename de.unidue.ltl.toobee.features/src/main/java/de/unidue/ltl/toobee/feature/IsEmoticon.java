@@ -28,6 +28,8 @@ import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
+import com.vdurmont.emoji.EmojiParser;
+
 public class IsEmoticon
     extends FeatureExtractorResource_ImplBase
     implements FeatureExtractor
@@ -74,13 +76,22 @@ public class IsEmoticon
         if (isHorizontalSmiley(u)) {
             return true;
         }
+        
+        if(isSurrogatePairEmoji(u)){
+            return true;
+        }
 
         return false;
     }
 
+    private static boolean isSurrogatePairEmoji(String u)
+    {
+        return Pattern.matches("[\uD83C-\uDBFF\uDC00-\uDFFF]+", u);
+    }
+
     private static boolean isHorizontalSmiley(String u)
     {
-        return Pattern.matches("[<>\\(\\)\\-\"='\\*oO0]+[\\._]*[<>\\(\\)\\-\"='\\*oO0]+", u);
+        return Pattern.matches("[\\^<>\\(\\)\\-\"='\\*oO0]+[\\._]*[\\^<>\\(\\)\\-\"='\\*oO0]+", u);
     }
 
     private static boolean isBckwd2ElementSmiley(String u)
