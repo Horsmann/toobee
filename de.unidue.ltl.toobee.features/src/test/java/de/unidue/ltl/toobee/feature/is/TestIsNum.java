@@ -13,6 +13,10 @@ public class TestIsNum {
 		assertTrue(IsNumber.is("3:23"));
 		assertTrue(IsNumber.is("3293.78"));
 		assertTrue(IsNumber.is("3,293.78"));
+		assertTrue(IsNumber.is("3$"));
+		assertTrue(IsNumber.is("3.2%"));
+		assertTrue(IsNumber.is("332-22-2"));
+		assertTrue(IsNumber.is("23/22/1"));
 		
 		assertFalse(IsNumber.is("hi!"));
 		assertFalse(IsNumber.is("one"));

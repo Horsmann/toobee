@@ -36,12 +36,18 @@ public class IsNumber
 
     static boolean is(String coveredText)
     {
-        return isPure(coveredText) || isTime(coveredText) || isDotCommaSeparatedNum(coveredText);
+        return isPure(coveredText) || isTime(coveredText) || isDotCommaSeparatedNum(coveredText)
+                || isNumberWithUnitOrMiscSymbols(coveredText);
+    }
+
+    private static boolean isNumberWithUnitOrMiscSymbols(String coveredText)
+    {
+        return isPure(coveredText.replaceAll("[\\.,\\-%////\\€¥\\$]+", ""));
     }
 
     static boolean isDotCommaSeparatedNum(String coveredText)
     {
-        
+
         String value = coveredText.replaceAll(",", "").replaceAll("\\.", "");
         return isPure(value) && !value.isEmpty();
     }
