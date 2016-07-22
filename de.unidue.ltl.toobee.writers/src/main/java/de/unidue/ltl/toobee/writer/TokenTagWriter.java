@@ -32,21 +32,23 @@ public class TokenTagWriter
     private String encoding;
 
     private static StringBuilder sb = new StringBuilder();
-    
+
     public static final String PARAM_MISSING_POS = "PARAM_MISSING_POS";
     @ConfigurationParameter(name = PARAM_MISSING_POS, mandatory = false, defaultValue = "XYZ")
     private String missingPosDummy;
 
     private BufferedWriter buffWrite = null;
-    
+
     @Override
     public void initialize(final UimaContext context)
         throws ResourceInitializationException
     {
         super.initialize(context);
         try {
-            buffWrite = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                    targetLocation)), encoding));
+            File file = new File(targetLocation);
+            file.mkdirs();
+            buffWrite = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(file), encoding));
         }
         catch (Exception e) {
             throw new ResourceInitializationException(e);
@@ -60,12 +62,13 @@ public class TokenTagWriter
 
         for (Sentence s : JCasUtil.select(aJCas, Sentence.class)) {
             sb = new StringBuilder();
-            for (Token token : JCasUtil.selectCovered(aJCas, Token.class, s.getBegin(), s.getEnd())) {
-            	String posValue = missingPosDummy;
-            	POS pos = token.getPos();
-            	if (pos != null){
-            		posValue = pos.getPosValue();
-            	}
+            for (Token token : JCasUtil.selectCovered(aJCas, Token.class, s.getBegin(),
+                    s.getEnd())) {
+                String posValue = missingPosDummy;
+                POS pos = token.getPos();
+                if (pos != null) {
+                    posValue = pos.getPosValue();
+                }
                 sb.append(token.getCoveredText() + " " + posValue + "\n");
             }
             sb.append("\n");
@@ -74,8 +77,8 @@ public class TokenTagWriter
 
     }
 
-
-    private void write(BufferedWriter aBf, StringBuilder aSb) throws AnalysisEngineProcessException
+    private void write(BufferedWriter aBf, StringBuilder aSb)
+        throws AnalysisEngineProcessException
     {
         try {
             buffWrite.write(sb.toString());
@@ -91,7 +94,7 @@ public class TokenTagWriter
         if (buffWrite != null) {
             try {
                 buffWrite.close();
-                buffWrite=null;
+                buffWrite = null;
             }
             catch (IOException e) {
                 throw new AnalysisEngineProcessException(e);
