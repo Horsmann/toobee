@@ -46,7 +46,7 @@ public class TokenTagWriter
         super.initialize(context);
         try {
             File file = new File(targetLocation);
-            file.mkdirs();
+            file.getParentFile().mkdirs();
             buffWrite = new BufferedWriter(
                     new OutputStreamWriter(new FileOutputStream(file), encoding));
         }
