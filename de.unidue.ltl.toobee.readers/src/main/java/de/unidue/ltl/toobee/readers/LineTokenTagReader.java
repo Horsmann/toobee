@@ -150,30 +150,31 @@ public class LineTokenTagReader
             for (int i = 0; i < sequence.size(); i++) {
                 String pairs = sequence.get(i).replaceAll(" +", " ");
 
-                String[] tokenTag = pairs.split(" ");
+                int idxLastSpace = pairs.lastIndexOf(" ");
+                String token = pairs.substring(0, idxLastSpace);
+                String tag = pairs.substring(idxLastSpace+1);
 
-                int tokenLen = tokenTag[0].length();
-                String t = tokenTag[0];
+                int tokenLen = token.length();
                 if(lowerCase){
-                    t = t.toLowerCase();
+                    token = token.toLowerCase();
                 }
-                documentText.append(t);
+                documentText.append(token);
 
                 int tokStart = documentText.length() - tokenLen;
                 int tokEnd = documentText.length();
-                Token token = new Token(aJCas, tokStart, tokEnd);
-                token.addToIndexes();
+                Token t = new Token(aJCas, tokStart, tokEnd);
+                t.addToIndexes();
 
                 if (i + 1 < sequence.size()) {
                     documentText.append(" ");
                 }
 
-                Type posTag = posMappingProvider.getTagType(tokenTag[1]);
-                POS pos = (POS) aJCas.getCas().createAnnotation(posTag, token.getBegin(),
-                        token.getEnd());
-                pos.setPosValue(tokenTag[1]);
+                Type posTag = posMappingProvider.getTagType(tag);
+                POS pos = (POS) aJCas.getCas().createAnnotation(posTag, t.getBegin(),
+                        t.getEnd());
+                pos.setPosValue(tag);
                 pos.addToIndexes();
-                token.setPos(pos);
+                t.setPos(pos);
             }
             Sentence sentence = new Sentence(aJCas, seqStart, documentText.length());
             sentence.addToIndexes();
