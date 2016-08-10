@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +16,7 @@ public class SplitUtil
 
     public static List<String> splitIntoNFilesIntoTemporaryFolder(String corpusFolder,
             String fileEnding, boolean shuffle, int split)
-        throws Exception
+                throws Exception
     {
         List<String> outfiles = new ArrayList<String>();
 
@@ -55,11 +54,12 @@ public class SplitUtil
             }
 
             String filePath = outPath + "/" + i + ".data";
-            
-            if(buffer.isEmpty()){
-                throw new IllegalStateException("In iteration ["+i+"] no data was left (e.g. number of splits to high, keeping sequences together might leave some folds with no data)");
+
+            if (buffer.isEmpty()) {
+                throw new IllegalStateException("In iteration [" + i
+                        + "] no data was left (e.g. number of splits to high, keeping sequences together might leave some folds with no data)");
             }
-            
+
             FileUtils.writeLines(new File(filePath), buffer);
 
             outfiles.add(filePath);
@@ -71,7 +71,7 @@ public class SplitUtil
 
     private static List<String> loadFileContents(String corpusFolder, String fileEnding,
             boolean shuffle)
-        throws IOException
+                throws IOException
     {
         List<List<String>> all = new ArrayList<List<String>>();
 
@@ -186,55 +186,51 @@ public class SplitUtil
         return allSplits;
     }
 
-    public static List<String[]> createCVoversampleSplits(List<String> files,
-            String aSecondaryFolder, String fileEnding, Integer aOversample, int aFolds)
-        throws Exception
+    /**
+     * Creates N splits into train test of the provided data. The length of the list and the number
+     * of folds must be equal.
+     */
+    public static List<String[]> createCrossValidationSplits(String nameRoot, List<String> split,
+            int numFolds)
+                throws IOException
     {
-        List<String[]> trainTest = new ArrayList<String[]>();
 
-        for (int i = 0; i < aFolds; i++) {
-            int testFileIdx = i;
-
-            String tempDir = System.getProperty("java.io.tmpdir");
-            String currentRunId = aOversample + "_SPLIT_" + (i + 1) + "_"
-                    + System.currentTimeMillis();
-            String trainDirPath = tempDir + "/" + currentRunId + "/train/";
-            new File(trainDirPath).mkdirs();
-            new File(trainDirPath).deleteOnExit();
-            String testDirPath = tempDir + "/" + currentRunId + "/test/";
-            new File(testDirPath).mkdirs();
-            new File(testDirPath).deleteOnExit();
-
-            // Oversample pieces of primary data
-            for (int j = 0; j < aFolds; j++) {
-                if (j == testFileIdx) {
-                    continue;
-                }
-                File trainSplitFile = new File(files.get(j));
-                for (int k = 0; k < aOversample; k++) {
-                    File ovsNr = new File(trainDirPath + "/" + (j + 1) + "_ovs_" + (k + 1)
-                            + fileEnding);
-                    Files.copy(trainSplitFile, ovsNr);
-                }
-            }
-
-            // copy secondary resources into train folder
-            int secondaryId = 0;
-            for (File f : new File(aSecondaryFolder).listFiles()) {
-                if (f.isHidden() || f.isDirectory()) {
-                    continue;
-                }
-                File vcb = new File(trainDirPath + "/" + "foreign_" + (secondaryId++ + 1)
-                        + fileEnding);
-                Files.copy(f, vcb);
-            }
-
-            File testFile = new File(files.get(testFileIdx));
-            Files.copy(testFile, new File(testDirPath + "/" + (testFileIdx + 1) + fileEnding));
-
-            trainTest.add(new String[] { trainDirPath, testDirPath });
+        if (numFolds != split.size()) {
+            throw new IllegalArgumentException(
+                    "Number of folds must be equal to the size of the list");
         }
-        return trainTest;
+
+        String tempDir = System.getProperty("java.io.tmpdir");
+
+        List<String[]> out = new ArrayList<>();
+        // build folder structure
+        for (int i = 0; i < numFolds; i++) {
+            File root = new File(tempDir + "/" + nameRoot + System.nanoTime());
+            root.mkdirs();
+            File train = new File(root, "train");
+            train.mkdirs();
+            File test = new File(root, "test");
+            test.mkdirs();
+
+            for (int j = 0; j < numFolds; j++) {
+
+                String name = new File(split.get(j)).getName();
+                int idx = name.indexOf(".");
+                if (idx > 0) {
+                    name = name.substring(0, idx);
+                }
+
+                if (i == j) {
+                    Files.copy(new File(split.get(i)), new File(test, name + ".txt"));
+                }
+                else {
+                    Files.copy(new File(split.get(i)), new File(train, name + ".txt"));
+                }
+            }
+            out.add(new String[] { train.getAbsolutePath(), test.getAbsolutePath() });
+        }
+
+        return out;
     }
 
 }
