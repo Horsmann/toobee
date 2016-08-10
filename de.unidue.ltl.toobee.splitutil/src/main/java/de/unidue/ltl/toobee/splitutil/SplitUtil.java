@@ -25,7 +25,7 @@ public class SplitUtil
         int splitPoint = readLines.size() / split;
 
         String tempDir = System.getProperty("java.io.tmpdir");
-        String currentRunId = "learningCurve_" + System.currentTimeMillis();
+        String currentRunId = "tmpFolder_" + System.currentTimeMillis();
         String outPath = tempDir + "/" + currentRunId;
 
         File out = new File(outPath);
