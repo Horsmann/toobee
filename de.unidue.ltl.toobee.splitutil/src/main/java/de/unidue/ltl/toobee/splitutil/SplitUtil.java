@@ -221,10 +221,10 @@ public class SplitUtil
                 }
 
                 if (i == j) {
-                    Files.copy(new File(split.get(i)), new File(test, name + ".txt"));
+                    Files.copy(new File(split.get(j)), new File(test, name + ".txt"));
                 }
                 else {
-                    Files.copy(new File(split.get(i)), new File(train, name + ".txt"));
+                    Files.copy(new File(split.get(j)), new File(train, name + ".txt"));
                 }
             }
             out.add(new String[] { train.getAbsolutePath(), test.getAbsolutePath() });
