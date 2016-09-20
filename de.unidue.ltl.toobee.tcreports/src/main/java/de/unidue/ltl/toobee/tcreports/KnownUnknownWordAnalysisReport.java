@@ -20,8 +20,8 @@ import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
 import org.dkpro.tc.core.ml.TCMachineLearningAdapter;
 import org.dkpro.tc.core.ml.TCMachineLearningAdapter.AdapterNameEntries;
-import org.dkpro.tc.crfsuite.CRFSuiteAdapter;
-import org.dkpro.tc.crfsuite.task.CRFSuiteTestTask;
+import org.dkpro.tc.ml.crfsuite.CRFSuiteAdapter;
+import org.dkpro.tc.ml.crfsuite.task.CRFSuiteTestTask;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.ConditionalFrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
