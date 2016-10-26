@@ -212,7 +212,7 @@ public class WackyReader extends
 		try {
 			bfs.get(currentReader).close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new CollectionException(e);
 		}
 
 		if (currentReader + 1 < bfs.size()) {
