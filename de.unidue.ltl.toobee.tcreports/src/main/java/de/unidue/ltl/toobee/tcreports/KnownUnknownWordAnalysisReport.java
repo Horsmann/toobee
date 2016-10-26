@@ -20,8 +20,9 @@ import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
 import org.dkpro.tc.core.ml.TCMachineLearningAdapter;
 import org.dkpro.tc.core.ml.TCMachineLearningAdapter.AdapterNameEntries;
-import org.dkpro.tc.crfsuite.CRFSuiteAdapter;
-import org.dkpro.tc.crfsuite.task.CRFSuiteTestTask;
+import org.dkpro.tc.ml.crfsuite.CRFSuiteAdapter;
+import org.dkpro.tc.ml.crfsuite.task.CRFSuiteTestTask;
+import org.dkpro.tc.ml.report.TcTaskTypeUtil;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.ConditionalFrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
@@ -61,12 +62,12 @@ public class KnownUnknownWordAnalysisReport
         File train = null, id2o = null;
         String outputFolderId = null;
         for (TaskContextMetadata subcontext : getSubtasks()) {
-            if (subcontext.getType().contains("ExtractFeaturesTask-Train")) {
+            if (TcTaskTypeUtil.isFeatureExtractionTrainTask(store, subcontext.getId())) {
                 train = store.locateKey(subcontext.getId(), TEST_TASK_OUTPUT_KEY + "/"
                         + featureFile);
                 extractTrainingVocab(train);
             }
-            if (subcontext.getType().contains(CRFSuiteTestTask.class.getName())) {
+            if (TcTaskTypeUtil.isMachineLearningAdapterTask(store, subcontext.getId())) {
                 outputFolderId = subcontext.getId();
                 id2o = store.locateKey(subcontext.getId(), Constants.ID_OUTCOME_KEY);
             }
