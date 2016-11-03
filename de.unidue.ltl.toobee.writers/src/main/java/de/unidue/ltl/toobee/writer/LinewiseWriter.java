@@ -30,6 +30,10 @@ public class LinewiseWriter
     public static final String PARAM_SOURCE_ENCODING = ComponentParameters.PARAM_SOURCE_ENCODING;
     @ConfigurationParameter(name = PARAM_SOURCE_ENCODING, mandatory = true, defaultValue = "UTF-8")
     private String encoding;
+    
+    public static final String PARAM_LOWER_CASE = "PARAM_LOWER_CASE";
+    @ConfigurationParameter(name = PARAM_SOURCE_ENCODING, mandatory = true, defaultValue = "false")
+    private boolean lowerCase;
 
     private BufferedWriter buffWrite = null;
 
@@ -60,7 +64,7 @@ public class LinewiseWriter
                     s.getEnd());
             for (int i = 0; i < tokensOfSequence.size(); i++) {
                 Token token = tokensOfSequence.get(i);
-                write(buffWrite, token.getCoveredText());
+                write(buffWrite, lowerCase(token.getCoveredText()));
                 if (i + 1 < tokensOfSequence.size()) {
                     write(buffWrite, WHITESPACE);
                 }
@@ -68,6 +72,14 @@ public class LinewiseWriter
             write(buffWrite, LINEBREAK);
         }
 
+    }
+
+    private String lowerCase(String coveredText)
+    {
+        if(lowerCase){
+            return coveredText.toLowerCase();
+        }
+        return coveredText;
     }
 
     private void write(BufferedWriter aBf, String text)
