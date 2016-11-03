@@ -30,10 +30,14 @@ public class LinewiseWriter
     public static final String PARAM_SOURCE_ENCODING = ComponentParameters.PARAM_SOURCE_ENCODING;
     @ConfigurationParameter(name = PARAM_SOURCE_ENCODING, mandatory = true, defaultValue = "UTF-8")
     private String encoding;
-    
+
     public static final String PARAM_LOWER_CASE = "PARAM_LOWER_CASE";
     @ConfigurationParameter(name = PARAM_LOWER_CASE, mandatory = true, defaultValue = "false")
     private boolean lowerCase;
+
+    public static final String PARAM_LINE_BREAK_AFTER_DOCUMENT = "PARAM_LINE_BREAK_AFTER_DOCUMENT";
+    @ConfigurationParameter(name = PARAM_LINE_BREAK_AFTER_DOCUMENT, mandatory = true, defaultValue = "false")
+    private boolean linebreak;
 
     private BufferedWriter buffWrite = null;
 
@@ -46,8 +50,8 @@ public class LinewiseWriter
     {
         super.initialize(context);
         try {
-            buffWrite = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                    targetLocation)), encoding));
+            buffWrite = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(new File(targetLocation)), encoding));
         }
         catch (Exception e) {
             throw new ResourceInitializationException(e);
@@ -69,14 +73,16 @@ public class LinewiseWriter
                     write(buffWrite, WHITESPACE);
                 }
             }
-            write(buffWrite, LINEBREAK);
+            if (linebreak) {
+                write(buffWrite, LINEBREAK);
+            }
         }
 
     }
 
     private String lowerCase(String coveredText)
     {
-        if(lowerCase){
+        if (lowerCase) {
             return coveredText.toLowerCase();
         }
         return coveredText;
@@ -102,7 +108,7 @@ public class LinewiseWriter
                 buffWrite = null;
             }
             catch (IOException e) {
-              throw new AnalysisEngineProcessException(e);
+                throw new AnalysisEngineProcessException(e);
             }
         }
     }
