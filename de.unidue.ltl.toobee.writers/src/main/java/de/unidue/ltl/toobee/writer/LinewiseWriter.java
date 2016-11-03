@@ -32,7 +32,7 @@ public class LinewiseWriter
     private String encoding;
     
     public static final String PARAM_LOWER_CASE = "PARAM_LOWER_CASE";
-    @ConfigurationParameter(name = PARAM_SOURCE_ENCODING, mandatory = true, defaultValue = "false")
+    @ConfigurationParameter(name = PARAM_LOWER_CASE, mandatory = true, defaultValue = "false")
     private boolean lowerCase;
 
     private BufferedWriter buffWrite = null;
