@@ -31,6 +31,14 @@ public class LinewiseWriter
     @ConfigurationParameter(name = PARAM_SOURCE_ENCODING, mandatory = true, defaultValue = "UTF-8")
     private String encoding;
 
+    public static final String PARAM_LOWER_CASE = "PARAM_LOWER_CASE";
+    @ConfigurationParameter(name = PARAM_LOWER_CASE, mandatory = true, defaultValue = "false")
+    private boolean lowerCase;
+
+    public static final String PARAM_LINE_BREAK_AFTER_DOCUMENT = "PARAM_LINE_BREAK_AFTER_DOCUMENT";
+    @ConfigurationParameter(name = PARAM_LINE_BREAK_AFTER_DOCUMENT, mandatory = true, defaultValue = "false")
+    private boolean linebreak;
+
     private BufferedWriter buffWrite = null;
 
     private final String WHITESPACE = " ";
@@ -42,8 +50,8 @@ public class LinewiseWriter
     {
         super.initialize(context);
         try {
-            buffWrite = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                    targetLocation)), encoding));
+            buffWrite = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(new File(targetLocation)), encoding));
         }
         catch (Exception e) {
             throw new ResourceInitializationException(e);
@@ -60,14 +68,24 @@ public class LinewiseWriter
                     s.getEnd());
             for (int i = 0; i < tokensOfSequence.size(); i++) {
                 Token token = tokensOfSequence.get(i);
-                write(buffWrite, token.getCoveredText());
+                write(buffWrite, lowerCase(token.getCoveredText()));
                 if (i + 1 < tokensOfSequence.size()) {
                     write(buffWrite, WHITESPACE);
                 }
             }
-            write(buffWrite, LINEBREAK);
+            if (linebreak) {
+                write(buffWrite, LINEBREAK);
+            }
         }
 
+    }
+
+    private String lowerCase(String coveredText)
+    {
+        if (lowerCase) {
+            return coveredText.toLowerCase();
+        }
+        return coveredText;
     }
 
     private void write(BufferedWriter aBf, String text)
@@ -90,7 +108,7 @@ public class LinewiseWriter
                 buffWrite = null;
             }
             catch (IOException e) {
-              throw new AnalysisEngineProcessException(e);
+                throw new AnalysisEngineProcessException(e);
             }
         }
     }
