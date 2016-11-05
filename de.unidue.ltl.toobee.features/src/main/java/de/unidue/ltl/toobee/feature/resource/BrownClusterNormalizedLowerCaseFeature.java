@@ -30,7 +30,17 @@ public class BrownClusterNormalizedLowerCaseFeature
     @ConfigurationParameter(name = PARAM_BROWN_CLUSTERS_LOCATION, mandatory = true)
     private File inputFile;
 
+    public static final String PARAM_CODE_GRANULARITY = "brownGranularity";
+    @ConfigurationParameter(name = PARAM_CODE_GRANULARITY, mandatory = true, defaultValue = "2")
+    private int stepSize;
+
+    public static final String PARAM_LOWER_CASE = "doBrownLowerCase";
+    @ConfigurationParameter(name = PARAM_LOWER_CASE, mandatory = true, defaultValue = "true")
+    boolean lowerCase;
+
     private HashMap<String, String> map = null;
+
+    int maxClustLength = 0;
 
     @Override
     public boolean initialize(ResourceSpecifier aSpecifier, Map<String, Object> aAdditionalParams)
@@ -52,7 +62,11 @@ public class BrownClusterNormalizedLowerCaseFeature
     public Set<Feature> extract(JCas aJcas, TextClassificationTarget aClassificationUnit)
         throws TextClassificationException
     {
-        String unit = aClassificationUnit.getCoveredText().toLowerCase();
+        String unit = aClassificationUnit.getCoveredText();
+
+        if (lowerCase) {
+            unit = unit.toLowerCase();
+        }
 
         String workingCopy = normalizeUrls(unit, "<URL>");
         workingCopy = normalizeEmails(workingCopy, "<EMAIL>");
@@ -70,26 +84,26 @@ public class BrownClusterNormalizedLowerCaseFeature
 
         String bitCode = map.get(unit);
 
-        features.add(getFeature(bitCode, 16));
-        features.add(getFeature(bitCode, 14));
-        features.add(getFeature(bitCode, 12));
-        features.add(getFeature(bitCode, 10));
-        features.add(getFeature(bitCode, 8));
-        features.add(getFeature(bitCode, 6));
-        features.add(getFeature(bitCode, 4));
-        features.add(getFeature(bitCode, 2));
+        if (bitCode == null) {
+            for (int i = 0; i < maxClustLength; i = i + stepSize) {
+                features.add(new Feature("brown_" + (i + stepSize), NOT_SET, true));
+            }
+            return features;
+        }
+
+        for (int i = 0; i < maxClustLength; i = i + stepSize) {
+            String subCode = null;
+            if (bitCode.length() < i + stepSize) {
+                subCode = bitCode;
+            }
+            else {
+                subCode = bitCode.substring(0, i + stepSize);
+            }
+            features.add(new Feature("brown_" + (i + stepSize), subCode));
+            // System.out.println(subCode);
+        }
 
         return features;
-    }
-
-    private Feature getFeature(String bitCode, int i)
-    {
-        if(bitCode == null || bitCode.isEmpty()){
-            return new Feature("brown_" + i , NOT_SET, true);
-        }
-        
-        String value = bitCode.length() >= i ? bitCode.substring(0, i) : NOT_SET; 
-        return new Feature("brown_" + i , value, value.equals(NOT_SET));
     }
 
     private void init()
@@ -107,6 +121,11 @@ public class BrownClusterNormalizedLowerCaseFeature
             String line = null;
             while ((line = bf.readLine()) != null) {
                 String[] split = line.split("\t");
+
+                if (split[0].length() > maxClustLength) {
+                    maxClustLength = split[0].length();
+                }
+
                 map.put(split[1], split[0]);
             }
 
