@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -39,6 +41,8 @@ public class TokenTagWriter
 
     private BufferedWriter buffWrite = null;
 
+    Set<String> tags = new HashSet();
+    
     @Override
     public void initialize(final UimaContext context)
         throws ResourceInitializationException
@@ -70,6 +74,7 @@ public class TokenTagWriter
                     posValue = pos.getPosValue();
                 }
                 sb.append(token.getCoveredText() + " " + posValue + "\n");
+                tags.add(posValue);
             }
             sb.append("\n");
             write(buffWrite, sb);
@@ -91,6 +96,10 @@ public class TokenTagWriter
     public void collectionProcessComplete()
         throws AnalysisEngineProcessException
     {
+        for(String t : tags){
+            System.out.println(t);
+        }
+        
         if (buffWrite != null) {
             try {
                 buffWrite.close();

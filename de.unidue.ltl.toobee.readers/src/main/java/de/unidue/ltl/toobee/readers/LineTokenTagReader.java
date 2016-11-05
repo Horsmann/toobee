@@ -151,6 +151,10 @@ public class LineTokenTagReader
                 String pairs = sequence.get(i).replaceAll(" +", " ");
 
                 int idxLastSpace = pairs.lastIndexOf(" ");
+                if(idxLastSpace < 0){
+                    int a=0;
+                    a++;
+                }
                 String token = pairs.substring(0, idxLastSpace);
                 String tag = pairs.substring(idxLastSpace+1);
 

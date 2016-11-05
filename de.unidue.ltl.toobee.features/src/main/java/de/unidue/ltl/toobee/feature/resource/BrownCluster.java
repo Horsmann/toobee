@@ -8,26 +8,27 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.zip.GZIPInputStream;
 
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.dkpro.tc.api.exception.TextClassificationException;
-import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
-public class BrownClusterNormalizedLowerCaseFeature
+public class BrownCluster
     extends FeatureExtractorResource_ImplBase
     implements FeatureExtractor
 {
-    private static final String NOT_SET = "*";
+    public static final String NOT_SET = "*";
 
-    public static final String PARAM_BROWN_CLUSTERS_LOCATION = "brownClusterLocations";
-    @ConfigurationParameter(name = PARAM_BROWN_CLUSTERS_LOCATION, mandatory = true)
+    public static final String FEATURE_NAME = "brown_";
+
+    public static final String PARAM_RESOURCE_LOCATION = "brownClusterLocations";
+    @ConfigurationParameter(name = PARAM_RESOURCE_LOCATION, mandatory = true)
     private File inputFile;
 
     public static final String PARAM_CODE_GRANULARITY = "brownGranularity";
@@ -37,6 +38,10 @@ public class BrownClusterNormalizedLowerCaseFeature
     public static final String PARAM_LOWER_CASE = "doBrownLowerCase";
     @ConfigurationParameter(name = PARAM_LOWER_CASE, mandatory = true, defaultValue = "true")
     boolean lowerCase;
+
+    public static final String PARAM_NORMALIZATION = "doBrownNormalization";
+    @ConfigurationParameter(name = PARAM_NORMALIZATION, mandatory = true, defaultValue = "true")
+    boolean normalize;
 
     private HashMap<String, String> map = null;
 
@@ -68,10 +73,13 @@ public class BrownClusterNormalizedLowerCaseFeature
             unit = unit.toLowerCase();
         }
 
-        String workingCopy = normalizeUrls(unit, "<URL>");
-        workingCopy = normalizeEmails(workingCopy, "<EMAIL>");
-        workingCopy = normalizeAtMentions(workingCopy, "<ATMENTION>");
-        workingCopy = normalizeHashTags(workingCopy, "<HASHTAG>");
+        if (normalize) {
+            String workingCopy = normalizeUrls(unit, "<URL>");
+            workingCopy = normalizeEmails(workingCopy, "<EMAIL>");
+            workingCopy = normalizeAtMentions(workingCopy, "<ATMENTION>");
+            workingCopy = normalizeHashTags(workingCopy, "<HASHTAG>");
+            unit = workingCopy;
+        }
 
         Set<Feature> features = createFeatures(unit);
 
@@ -86,7 +94,7 @@ public class BrownClusterNormalizedLowerCaseFeature
 
         if (bitCode == null) {
             for (int i = 0; i < maxClustLength; i = i + stepSize) {
-                features.add(new Feature("brown_" + (i + stepSize), NOT_SET, true));
+                features.add(new Feature(FEATURE_NAME + (i + stepSize), NOT_SET, true));
             }
             return features;
         }
@@ -99,7 +107,7 @@ public class BrownClusterNormalizedLowerCaseFeature
             else {
                 subCode = bitCode.substring(0, i + stepSize);
             }
-            features.add(new Feature("brown_" + (i + stepSize), subCode));
+            features.add(new Feature(FEATURE_NAME + (i + stepSize), subCode));
             // System.out.println(subCode);
         }
 
@@ -138,15 +146,7 @@ public class BrownClusterNormalizedLowerCaseFeature
     private BufferedReader openFile()
         throws Exception
     {
-        InputStreamReader isr = null;
-        if (inputFile.getAbsolutePath().endsWith(".gz")) {
-
-            isr = new InputStreamReader(new GZIPInputStream(new FileInputStream(inputFile)),
-                    "UTF-8");
-        }
-        else {
-            isr = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
-        }
+        InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
         return new BufferedReader(isr);
     }
 
@@ -194,6 +194,16 @@ public class BrownClusterNormalizedLowerCaseFeature
         normalized = normalized.replaceAll("www\\." + URL_CORE_REGEX, replacement);
 
         return normalized;
+    }
+
+    public int getStepSize()
+    {
+        return stepSize;
+    }
+
+    public int getMaxLength()
+    {
+        return maxClustLength;
     }
 
 }
