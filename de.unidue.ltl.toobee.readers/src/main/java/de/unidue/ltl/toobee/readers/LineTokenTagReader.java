@@ -70,6 +70,10 @@ public class LineTokenTagReader
     public static final String PARAM_LOWER_CASE = "PARAM_LOWER_CASE";
     @ConfigurationParameter(name = PARAM_LOWER_CASE, mandatory = false, defaultValue="false")
     private boolean lowerCase;
+    
+    public static final String PARAM_SEPARATOR = "PARAM_SEPARATOR";
+    @ConfigurationParameter(name = PARAM_SEPARATOR, mandatory = true, defaultValue=" ")
+    private String separator;
 
     public static final String PARAM_SEQUENCES_PER_CAS = "PARAM_SEQUENCES_PER_CAS";
     @ConfigurationParameter(name = PARAM_SEQUENCES_PER_CAS, mandatory = true, defaultValue = "1000")
@@ -150,7 +154,7 @@ public class LineTokenTagReader
             for (int i = 0; i < sequence.size(); i++) {
                 String pairs = sequence.get(i).replaceAll(" +", " ");
 
-                int idxLastSpace = pairs.lastIndexOf(" ");
+                int idxLastSpace = pairs.lastIndexOf(separator);
                 String token = pairs.substring(0, idxLastSpace);
                 String tag = pairs.substring(idxLastSpace+1);
 
