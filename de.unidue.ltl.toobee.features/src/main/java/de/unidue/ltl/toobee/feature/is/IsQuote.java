@@ -36,7 +36,9 @@ public class IsQuote
 
     static boolean is(String aToken)
     {
-        return aToken.equals("\"") || aToken.equals(",") || aToken.equals("`")|| aToken.equals("'");
+        return aToken.equals("\"") || aToken.equals("\"\"") || aToken.equals(",")
+                || aToken.equals("`") || aToken.equals("``") || aToken.equals("'")
+                || aToken.equals("''") || aToken.equals("`") || aToken.equals("``");
     }
 
 }
