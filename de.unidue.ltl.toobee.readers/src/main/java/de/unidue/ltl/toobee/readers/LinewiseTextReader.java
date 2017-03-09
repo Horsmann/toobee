@@ -167,12 +167,7 @@ public class LinewiseTextReader
     private boolean closeReaderOpenNext()
         throws CollectionException, IOException
     {
-        try {
-            bfs.get(currentReader).close();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        bfs.get(currentReader).close();
 
         if (currentReader + 1 < bfs.size()) {
             currentReader++;
