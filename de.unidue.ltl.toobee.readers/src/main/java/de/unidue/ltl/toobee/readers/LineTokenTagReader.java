@@ -66,14 +66,18 @@ public class LineTokenTagReader
     public static final String PARAM_LANGUAGE = ComponentParameters.PARAM_LANGUAGE;
     @ConfigurationParameter(name = PARAM_LANGUAGE, mandatory = false)
     private String language;
-    
+
     public static final String PARAM_LOWER_CASE = "PARAM_LOWER_CASE";
-    @ConfigurationParameter(name = PARAM_LOWER_CASE, mandatory = false, defaultValue="false")
+    @ConfigurationParameter(name = PARAM_LOWER_CASE, mandatory = false, defaultValue = "false")
     private boolean lowerCase;
-    
+
     public static final String PARAM_SEPARATOR = "PARAM_SEPARATOR";
-    @ConfigurationParameter(name = PARAM_SEPARATOR, mandatory = true, defaultValue=" ")
+    @ConfigurationParameter(name = PARAM_SEPARATOR, mandatory = true, defaultValue = " ")
     private String separator;
+
+    public static final String PARAM_SET_POS = "PARAM_SET_POS";
+    @ConfigurationParameter(name = PARAM_SET_POS, mandatory = true, defaultValue = "true")
+    private boolean setPos;
 
     public static final String PARAM_SEQUENCES_PER_CAS = "PARAM_SEQUENCES_PER_CAS";
     @ConfigurationParameter(name = PARAM_SEQUENCES_PER_CAS, mandatory = true, defaultValue = "1000")
@@ -156,10 +160,10 @@ public class LineTokenTagReader
 
                 int idxLastSpace = pairs.lastIndexOf(separator);
                 String token = pairs.substring(0, idxLastSpace);
-                String tag = pairs.substring(idxLastSpace+1);
+                String tag = pairs.substring(idxLastSpace + 1);
 
                 int tokenLen = token.length();
-                if(lowerCase){
+                if (lowerCase) {
                     token = token.toLowerCase();
                 }
                 documentText.append(token);
@@ -173,12 +177,14 @@ public class LineTokenTagReader
                     documentText.append(" ");
                 }
 
-                Type posTag = posMappingProvider.getTagType(tag);
-                POS pos = (POS) aJCas.getCas().createAnnotation(posTag, t.getBegin(),
-                        t.getEnd());
-                pos.setPosValue(tag);
-                pos.addToIndexes();
-                t.setPos(pos);
+                if (setPos) {
+                    Type posTag = posMappingProvider.getTagType(tag);
+                    POS pos = (POS) aJCas.getCas().createAnnotation(posTag, t.getBegin(),
+                            t.getEnd());
+                    pos.setPosValue(tag);
+                    pos.addToIndexes();
+                    t.setPos(pos);
+                }
             }
             Sentence sentence = new Sentence(aJCas, seqStart, documentText.length());
             sentence.addToIndexes();
