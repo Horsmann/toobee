@@ -41,7 +41,9 @@ public class TokenTagWriter
 
     private BufferedWriter buffWrite = null;
 
-    Set<String> tags = new HashSet();
+    Set<String> tags = new HashSet<>();
+    
+    int tokens=0;
     
     @Override
     public void initialize(final UimaContext context)
@@ -75,6 +77,7 @@ public class TokenTagWriter
                 }
                 sb.append(token.getCoveredText() + " " + posValue + "\n");
                 tags.add(posValue);
+                tokens++;
             }
             sb.append("\n");
             write(buffWrite, sb);
@@ -99,6 +102,7 @@ public class TokenTagWriter
         for(String t : tags){
             System.out.println(t);
         }
+        System.out.println("Number of tokens written: " + tokens);
         
         if (buffWrite != null) {
             try {
