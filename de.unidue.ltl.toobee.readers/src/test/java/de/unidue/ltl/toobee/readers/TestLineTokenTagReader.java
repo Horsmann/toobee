@@ -185,7 +185,7 @@ public class TestLineTokenTagReader
                 LineTokenTagReader.PARAM_LANGUAGE, "en", LineTokenTagReader.PARAM_SOURCE_LOCATION,
                 "src/test/resources/LineTokenTag/", LineTokenTagReader.PARAM_POS_TAGSET, "ptb",
                 LineTokenTagReader.PARAM_PATTERNS, pattern,
-                LineTokenTagReader.PARAM_SEQUENCES_PER_CAS, limit);
+                LineTokenTagReader.PARAM_SEQUENCES_PER_CAS, Integer.toString(limit));
     }
 
 }

@@ -81,8 +81,10 @@ public class LineTokenTagReader
 
     public static final String PARAM_SEQUENCES_PER_CAS = "PARAM_SEQUENCES_PER_CAS";
     @ConfigurationParameter(name = PARAM_SEQUENCES_PER_CAS, mandatory = true, defaultValue = "1000")
-    private int seqLimit;
+    private String seqLimitString;
 
+    int seqLimit=-1;
+    
     public static final String ENCODING_AUTO = "auto";
 
     private MappingProvider posMappingProvider;
@@ -101,6 +103,8 @@ public class LineTokenTagReader
         throws ResourceInitializationException
     {
         super.initialize(context);
+        
+        seqLimit = Integer.valueOf(seqLimitString);
 
         posMappingProvider = new MappingProvider();
         posMappingProvider.setDefault(MappingProvider.LOCATION,
