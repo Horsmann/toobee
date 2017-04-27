@@ -32,6 +32,10 @@ public class TokenTagWriter
     public static final String PARAM_SOURCE_ENCODING = ComponentParameters.PARAM_SOURCE_ENCODING;
     @ConfigurationParameter(name = PARAM_SOURCE_ENCODING, mandatory = true, defaultValue = "UTF-8")
     private String encoding;
+    
+    public static final String PARAM_WRITE_COARSE = "PARAM_WRITE_COARSE";
+    @ConfigurationParameter(name = PARAM_WRITE_COARSE, mandatory = true, defaultValue = "false")
+    private boolean coarse;
 
     private static StringBuilder sb = new StringBuilder();
 
@@ -73,9 +77,13 @@ public class TokenTagWriter
                 String posValue = missingPosDummy;
                 POS pos = token.getPos();
                 if (pos != null) {
-                    posValue = pos.getPosValue();
+                    if(!coarse){
+                        posValue = pos.getPosValue();    
+                    }else{
+                        posValue = pos.getClass().getSimpleName();
+                    }
                 }
-                sb.append(token.getCoveredText() + " " + posValue + "\n");
+                sb.append(token.getCoveredText().replaceAll(" ", "-") + " " + posValue + "\n");
                 tags.add(posValue);
                 tokens++;
             }
