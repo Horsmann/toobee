@@ -83,7 +83,7 @@ public class TokenTagWriter
                         posValue = pos.getClass().getSimpleName();
                     }
                 }
-                sb.append(token.getCoveredText().replaceAll(" ", "-") + " " + posValue + "\n");
+                sb.append(token.getCoveredText() + " " + posValue + "\n");
                 tags.add(posValue);
                 tokens++;
             }
