@@ -58,7 +58,7 @@ public class DictionaryTagFeature
     private void loadDictionary()
         throws IOException
     {
-        List<String> readLines = FileUtils.readLines(new File(dictionaryLocation));
+        List<String> readLines = FileUtils.readLines(new File(dictionaryLocation), "utf-8");
 
         for (String l : readLines) {
             String[] split = l.split("\t");
