@@ -44,7 +44,7 @@ public class TestConllReader {
 
 		String[] expectedFine = new String[] { "NN", "VVFIN", "PPER", "ADV", "APPR", "APPR", "NN", "$."};
 
-		String[] expectedCoarse = new String[] { "NOUN", "VERB", "PRON", "ADV", "ADP", "ADP", "NOUN", "PUNCT" };
+		String[] expectedCoarse = new String[] { "POS_NOUN", "POS_VERB", "POS_PRON", "POS_ADV", "POS_ADP", "POS_ADP", "POS_NOUN", "POS_PUNCT" };
 
 		AssertAnnotations.assertPOS(expectedCoarse, expectedFine, select(jcas, POS.class));
 	}

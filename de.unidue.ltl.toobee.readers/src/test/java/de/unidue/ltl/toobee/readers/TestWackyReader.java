@@ -50,7 +50,7 @@ public class TestWackyReader {
 		reader.getNext(jcas.getCas());
 
 		String[] expectedFine = new String[] { "NNS"   , ","    , "JJ" , "NN",   ":",   "CC",   "DT",  "JJ", "NNS",  "SENT"};
-		String[] expectedCoarse = new String[] { "NOUN", "PUNCT", "ADJ", "NOUN", "PUNCT", "CONJ", "DET", "ADJ", "NOUN", "PUNCT"};
+		String[] expectedCoarse = new String[] { "POS_NOUN", "POS_PUNCT", "POS_ADJ", "POS_NOUN", "POS_PUNCT", "POS_CONJ", "POS_DET", "POS_ADJ", "POS_NOUN", "POS_PUNCT"};
 		AssertAnnotations.assertPOS(expectedCoarse, expectedFine, select(jcas, POS.class));
 	
 	}
