@@ -11,10 +11,16 @@ public class NormalizationUtils
         workingCopy = normalizeEmails(workingCopy, replacement);
         workingCopy = normalizeAtMentions(workingCopy, replacement);
         workingCopy = normalizeHashTags(workingCopy, replacement);
-        return workingCopy;
+        workingCopy = normalizeRetweet(workingCopy, replacement);
+        return workingCopy.trim();
     }
 
-    public static String normalizeHashTags(String input, String replacement)
+    private static String normalizeRetweet(String workingCopy, String replacement) {
+    	
+		return workingCopy.replaceAll("RT :", replacement);
+	}
+
+	public static String normalizeHashTags(String input, String replacement)
     {
         String HASHTAG = "#[a-zA-Z0-9-_]+";
         String normalized = input.replaceAll(HASHTAG, replacement);
