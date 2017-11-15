@@ -22,6 +22,9 @@ public class TestLinewiseTextReader
         expected.add("Hi there, how are you?");
         expected.add("I am fine, how are you?");
         expected.add("fine!");
+        expected.add("O, really?");
+        expected.add("Something like that, yes");
+        expected.add("hm kay");
     }
     
     @Test
@@ -39,6 +42,9 @@ public class TestLinewiseTextReader
         assertEquals(expected.get(0), actual.get(0));
         assertEquals(expected.get(1), actual.get(1));
         assertEquals(expected.get(2), actual.get(2));
+        assertEquals(expected.get(3), actual.get(3));
+        assertEquals(expected.get(4), actual.get(4));
+        assertEquals(expected.get(5), actual.get(5));
         
     }
     

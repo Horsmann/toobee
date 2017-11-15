@@ -67,14 +67,14 @@ public class LinewiseTextReader
 
     public static final String ENCODING_AUTO = "auto";
 
-    private BufferedReader br;
-
-    private List<BufferedReader> bfs = new ArrayList<BufferedReader>();
-    private int currentReader = 0;
+    private BufferedReader reader;
 
     private int instanceId = 1;
 
     private String nextLine = null;
+    
+    private List<Resource> resourcePool = new ArrayList<Resource>();
+	private int pointer = -1;
 
     @Override
     public void initialize(UimaContext context)
@@ -82,23 +82,15 @@ public class LinewiseTextReader
     {
         super.initialize(context);
 
-        try {
-            for (Resource r : getResources()) {
-                String name = r.getResource().getFile().getName();
-                InputStreamReader is = null;
-                if (name.endsWith(".gz")) {
-                    is = new InputStreamReader(new GZIPInputStream(r.getInputStream()), encoding);
-                }
-                else {
-                    is = new InputStreamReader(r.getInputStream(), encoding);
-                }
-                br = new BufferedReader(is);
-                bfs.add(br);
-            }
-        }
-        catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
+    	List<Resource> resourcess = new ArrayList<Resource>(getResources());
+		for (int i = 1; i < resourcess.size(); i++) {
+			resourcePool.add(resourcess.get(i));
+		}
+		try {
+			reader = new BufferedReader(openStream(resourcess.get(0)));
+		} catch (IOException e) {
+			throw new ResourceInitializationException(e);
+		}
     }
 
     public void getNext(JCas aJCas)
@@ -164,22 +156,33 @@ public class LinewiseTextReader
 
     }
 
-    private boolean closeReaderOpenNext()
-        throws CollectionException, IOException
-    {
-        bfs.get(currentReader).close();
+    private boolean closeReaderOpenNext() throws CollectionException, IOException {
+		reader.close();
+		reader = null;
 
-        if (currentReader + 1 < bfs.size()) {
-            currentReader++;
-            return hasNext();
-        }
-        return false;
-    }
+		if (pointer + 1 < resourcePool.size()) {
+			pointer++;
+			Resource resource = resourcePool.get(pointer);
+			reader = new BufferedReader(openStream(resource));
+			return hasNext();
+		}
+		return false;
+	}
 
-    private BufferedReader getBufferedReader()
-    {
-        return bfs.get(currentReader);
-    }
+	private InputStreamReader openStream(Resource resource) throws IOException {
+		String name = resource.getResource().getFile().getName();
+		InputStreamReader is = null;
+		if (name.endsWith(".gz")) {
+			is = new InputStreamReader(new GZIPInputStream(resource.getInputStream()), encoding);
+		} else {
+			is = new InputStreamReader(resource.getInputStream(), encoding);
+		}
+		return is;
+	}
+
+	private BufferedReader getBufferedReader() {
+		return reader;
+	}
 
     public Progress[] getProgress()
     {
