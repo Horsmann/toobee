@@ -72,7 +72,7 @@ public class TestRawJsonReaderLocalFileSystem
         throws UIMAException, IOException
     {
         String payload = readDocumentText(tweetPlainText, true, false);
-        assertEquals("Let's get this ink next weekend ", payload);
+        assertEquals("Let's get this ink next weekend", payload);
     }
 
     @Test
