@@ -18,11 +18,10 @@ import org.dkpro.lab.reporting.BatchReportBase;
 import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
-import org.dkpro.tc.core.ml.TCMachineLearningAdapter;
-import org.dkpro.tc.core.ml.TCMachineLearningAdapter.AdapterNameEntries;
+import org.dkpro.tc.core.ml.TcShallowLearningAdapter;
+import org.dkpro.tc.core.ml.TcShallowLearningAdapter.AdapterNameEntries;
+import org.dkpro.tc.core.task.TcTaskTypeUtil;
 import org.dkpro.tc.ml.crfsuite.CRFSuiteAdapter;
-import org.dkpro.tc.ml.crfsuite.task.CRFSuiteTestTask;
-import org.dkpro.tc.ml.report.TcTaskTypeUtil;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.ConditionalFrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
@@ -49,7 +48,7 @@ public class KnownUnknownWordAnalysisReport
     static String featureFile = null;
     static String predictionFile = null;
     {
-        TCMachineLearningAdapter adapter = CRFSuiteAdapter.getInstance();
+        TcShallowLearningAdapter adapter = CRFSuiteAdapter.getInstance();
         featureFile = adapter.getFrameworkFilename(AdapterNameEntries.featureVectorsFile);
         predictionFile = adapter.getFrameworkFilename(AdapterNameEntries.predictionsFile);
     }
@@ -126,8 +125,8 @@ public class KnownUnknownWordAnalysisReport
 
         File invo = new File(ivLocation);
         File oov = new File(oovLocation);
-        FileUtils.writeStringToFile(invo, known);
-        FileUtils.writeStringToFile(oov, unknown);
+        FileUtils.writeStringToFile(invo, known, "utf-8");
+        FileUtils.writeStringToFile(oov, unknown, "utf-8");
 
         iv_all.add(invo);
         oov_all.add(oov);
@@ -250,7 +249,7 @@ public class KnownUnknownWordAnalysisReport
             sb.append(String.format("%15s\t\t%.1f\n", key, avg));
         }
         
-        FileUtils.writeStringToFile(new File(output), sb.toString());
+        FileUtils.writeStringToFile(new File(output), sb.toString(), "utf-8");
     }
 
     private String getClassThatWasMostOftenChosenWronglyForLabel(FrequencyDistribution<String> fd,

@@ -8,7 +8,7 @@ import org.dkpro.lab.reporting.BatchReportBase;
 import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
-import org.dkpro.tc.ml.report.TcTaskTypeUtil;
+import org.dkpro.tc.core.task.TcTaskTypeUtil;
 
 public class ConfusionMatrixReport
     extends BatchReportBase
@@ -30,7 +30,7 @@ public class ConfusionMatrixReport
                 File prediction = storageService.locateKey(subcontext.getId(),
                         "predictions.txt");
                 
-                List<String> lines = FileUtils.readLines(prediction);
+                List<String> lines = FileUtils.readLines(prediction, "utf-8");
                 
                 for(String l : lines){
                     if(l.isEmpty()){
@@ -42,7 +42,7 @@ public class ConfusionMatrixReport
                 
                 File locateKey = storageService.locateKey(subcontext.getId(), OUTPUT_FILE);
                 String formattedMatrix = matrix.getFormattedMatrix();
-                FileUtils.writeStringToFile(locateKey, formattedMatrix);
+                FileUtils.writeStringToFile(locateKey, formattedMatrix, "utf-8");
             }
         }
     }

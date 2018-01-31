@@ -13,7 +13,7 @@ import org.dkpro.lab.reporting.BatchReportBase;
 import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
-import org.dkpro.tc.ml.report.TcTaskTypeUtil;
+import org.dkpro.tc.core.task.TcTaskTypeUtil;
 
 public class AccuracyPerWordClass
     extends BatchReportBase
@@ -37,7 +37,7 @@ public class AccuracyPerWordClass
                 String report = generateWordClassReport(locateKey);
 
                 File targetFile = storageService.locateKey(subcontext.getId(), OUTPUT_FILE);
-                FileUtils.writeStringToFile(targetFile, report);
+                FileUtils.writeStringToFile(targetFile, report, "utf-8");
 
                 writtenFiles.add(targetFile);
             }
@@ -71,7 +71,7 @@ public class AccuracyPerWordClass
     {
         Map<String, WordClass> wcp = new HashMap<>();
 
-        List<String> lines = FileUtils.readLines(locateKey);
+        List<String> lines = FileUtils.readLines(locateKey, "utf-8");
         Map<String, String> labels = getLabels(lines);
 
         for (String l : lines) {
@@ -175,7 +175,7 @@ public class AccuracyPerWordClass
             Map<String, Double> freqOccur = new HashMap<>();
 
             for (File f : AccuracyPerWordClass.writtenFiles) {
-                List<String> lines = FileUtils.readLines(f);
+                List<String> lines = FileUtils.readLines(f, "utf-8");
                 for (String l : lines) {
                     if(l.startsWith("#")){
                         continue;
@@ -208,7 +208,7 @@ public class AccuracyPerWordClass
                 sb.append("\n");
             }
             FileUtils.writeStringToFile(new File(output),
-                    sb.toString());
+                    sb.toString(), "utf-8");
         }
 
     private static Map<String, Double> add(String label, Double val, Map<String, Double> map)

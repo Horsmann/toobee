@@ -13,10 +13,10 @@ import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
 import org.dkpro.tc.core.util.ReportConstants;
-import org.dkpro.tc.evaluation.Id2Outcome;
-import org.dkpro.tc.evaluation.evaluator.EvaluatorBase;
-import org.dkpro.tc.evaluation.evaluator.EvaluatorFactory;
-import org.dkpro.tc.evaluation.measures.label.Accuracy;
+import org.dkpro.tc.ml.report.util.Tc2LtlabEvalConverter;
+
+import de.unidue.ltl.evaluation.core.EvaluationData;
+import de.unidue.ltl.evaluation.measures.Accuracy;
 
 public class OverallAccuracyCollector
     extends BatchReportBase
@@ -34,12 +34,12 @@ public class OverallAccuracyCollector
                 StorageService storageService = getContext().getStorageService();
 
                 File id2outcome = storageService.locateKey(subcontext.getId(), Constants.ID_OUTCOME_KEY);
-                Id2Outcome o = new Id2Outcome(id2outcome, Constants.LM_SINGLE_LABEL);
-                EvaluatorBase createEvaluator = EvaluatorFactory.createEvaluator(o, true, false);
-                Double acc = createEvaluator.calculateEvaluationMeasures().get(Accuracy.class.getSimpleName());
+                EvaluationData<String> data = Tc2LtlabEvalConverter.convertSingleLabelModeId2Outcome(id2outcome);
+                
+                Accuracy<String> acc = new Accuracy<>(data);
                 
                 File locateKey = storageService.locateKey(subcontext.getId(), "accuracy.txt");
-                FileUtils.write(locateKey, acc.toString());
+                FileUtils.write(locateKey, acc.getResult() + "", "utf-8");
                 
                 writtenFiles.add(id2outcome);
                 break;
@@ -79,7 +79,7 @@ public class OverallAccuracyCollector
         sb.append("\n");
         sb.append(String.format("Std-Dev: %.2f\n", Math.sqrt(varianz)));
         
-        FileUtils.writeStringToFile(new File(output), sb.toString());
+        FileUtils.writeStringToFile(new File(output), sb.toString(), "utf-8");
     }
 
     private static double getVarianz(Double avg, List<Double> accuracies)
