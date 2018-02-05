@@ -18,10 +18,7 @@ import org.dkpro.lab.reporting.BatchReportBase;
 import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
-import org.dkpro.tc.core.ml.TcShallowLearningAdapter;
-import org.dkpro.tc.core.ml.TcShallowLearningAdapter.AdapterNameEntries;
 import org.dkpro.tc.core.task.TcTaskTypeUtil;
-import org.dkpro.tc.ml.crfsuite.CRFSuiteAdapter;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.ConditionalFrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
@@ -45,14 +42,6 @@ public class KnownUnknownWordAnalysisReport
     List<String> testPred = new ArrayList<>();
     List<String> testGold = new ArrayList<>();
 
-    static String featureFile = null;
-    static String predictionFile = null;
-    {
-        TcShallowLearningAdapter adapter = CRFSuiteAdapter.getInstance();
-        featureFile = adapter.getFrameworkFilename(AdapterNameEntries.featureVectorsFile);
-        predictionFile = adapter.getFrameworkFilename(AdapterNameEntries.predictionsFile);
-    }
-
     public void execute()
         throws Exception
     {
@@ -63,7 +52,7 @@ public class KnownUnknownWordAnalysisReport
         for (TaskContextMetadata subcontext : getSubtasks()) {
             if (TcTaskTypeUtil.isFeatureExtractionTrainTask(store, subcontext.getId())) {
                 train = store.locateKey(subcontext.getId(), TEST_TASK_OUTPUT_KEY + "/"
-                        + featureFile);
+                        + Constants.FILENAME_DATA_IN_CLASSIFIER_FORMAT);
                 extractTrainingVocab(train);
             }
             if (TcTaskTypeUtil.isMachineLearningAdapterTask(store, subcontext.getId())) {
