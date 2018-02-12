@@ -12,7 +12,6 @@ import org.dkpro.lab.reporting.BatchReportBase;
 import org.dkpro.lab.storage.StorageService;
 import org.dkpro.lab.task.TaskContextMetadata;
 import org.dkpro.tc.core.Constants;
-import org.dkpro.tc.core.util.ReportConstants;
 import org.dkpro.tc.ml.report.util.Tc2LtlabEvalConverter;
 
 import de.unidue.ltl.evaluation.core.EvaluationData;
@@ -56,7 +55,7 @@ public class OverallAccuracyCollector
         for (File f : writtenFiles) {
             Properties p = new Properties();
             p.load(new FileInputStream(f));
-            String property = p.getProperty(ReportConstants.PCT_CORRECT);
+            String property = p.getProperty("Correct");
             String value = property.replaceAll(",", ".");
             Double accuracy = Double.valueOf(value);
             accuracies.add(accuracy * 100);
