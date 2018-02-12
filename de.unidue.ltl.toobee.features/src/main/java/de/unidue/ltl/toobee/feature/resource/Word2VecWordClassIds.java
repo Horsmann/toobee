@@ -15,6 +15,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 public class Word2VecWordClassIds extends FeatureExtractorResource_ImplBase
@@ -48,7 +49,7 @@ public class Word2VecWordClassIds extends FeatureExtractorResource_ImplBase
 
 		Integer wc = map.get(unit);
 
-		features.add(new Feature("w2vWc", wc == null ? -1 : wc));
+		features.add(new Feature("w2vWc", wc == null ? -1 : wc, FeatureType.NUMERIC));
 		return features;
 	}
 

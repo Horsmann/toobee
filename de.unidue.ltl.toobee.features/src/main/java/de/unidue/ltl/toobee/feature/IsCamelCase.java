@@ -9,6 +9,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 public class IsCamelCase extends FeatureExtractorResource_ImplBase implements
@@ -26,7 +27,7 @@ public class IsCamelCase extends FeatureExtractorResource_ImplBase implements
 		boolean isCamelCase = isCamelCase(text);
 
 		Set<Feature> features = new HashSet<Feature>();
-		features.add(new Feature(FEATURE_NAME, isCamelCase ? 1 : 0));
+		features.add(new Feature(FEATURE_NAME, isCamelCase ? 1 : 0, FeatureType.BOOLEAN));
 		return features;
 	}
 

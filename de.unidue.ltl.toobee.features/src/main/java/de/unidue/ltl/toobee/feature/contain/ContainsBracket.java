@@ -8,6 +8,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 public class ContainsBracket
@@ -27,10 +28,10 @@ public class ContainsBracket
 
         Set<Feature> features = new HashSet<Feature>();
         if (b) {
-            features.add(new Feature(FEATURE_NAME, 1));
+            features.add(new Feature(FEATURE_NAME, 1, FeatureType.BOOLEAN));
         }
         else {
-            features.add(new Feature(FEATURE_NAME, 0, true));
+            features.add(new Feature(FEATURE_NAME, 0, true, FeatureType.BOOLEAN));
         }
 
         return features;

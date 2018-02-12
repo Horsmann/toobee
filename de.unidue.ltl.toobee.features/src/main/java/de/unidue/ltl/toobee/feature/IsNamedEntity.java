@@ -10,6 +10,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity;
@@ -26,11 +27,11 @@ public class IsNamedEntity extends FeatureExtractorResource_ImplBase implements
 		
 		List<NamedEntity> nes = JCasUtil.selectCovered(aView, NamedEntity.class, aClassificationUnit.getBegin(), aClassificationUnit.getEnd());
 		if(nes.isEmpty()){
-			Feature feature = new Feature(FEATURE_NAME,  0);
+			Feature feature = new Feature(FEATURE_NAME,  0, FeatureType.BOOLEAN);
 			features.add(feature);
 			return features;
 		}
-		features.add(new Feature(FEATURE_NAME,  1));
+		features.add(new Feature(FEATURE_NAME,  1, FeatureType.BOOLEAN));
 		return features;
 	}
 }

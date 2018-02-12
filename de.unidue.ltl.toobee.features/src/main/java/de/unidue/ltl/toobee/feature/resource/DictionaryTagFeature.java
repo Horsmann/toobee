@@ -18,6 +18,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 public class DictionaryTagFeature
@@ -93,9 +94,9 @@ public class DictionaryTagFeature
 
         String[] mft = getMostFrequentTag(tokenText);
 
-        features.add(new Feature(FEATURE_NAME + "1", mft[0], mft[0].equals(UNKNOWN)));
-        features.add(new Feature(FEATURE_NAME + "2", mft[1], mft[1].equals(UNKNOWN)));
-        features.add(new Feature(FEATURE_NAME + "3", mft[2], mft[2].equals(UNKNOWN)));
+        features.add(new Feature(FEATURE_NAME + "1", mft[0], mft[0].equals(UNKNOWN), FeatureType.STRING));
+        features.add(new Feature(FEATURE_NAME + "2", mft[1], mft[1].equals(UNKNOWN), FeatureType.STRING));
+        features.add(new Feature(FEATURE_NAME + "3", mft[2], mft[2].equals(UNKNOWN), FeatureType.STRING));
 
         return features;
     }

@@ -26,6 +26,7 @@ import java.util.Set;
 import org.apache.uima.jcas.JCas;
 import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 import org.dkpro.tc.features.tcu.TcuLookUpTable;
 
@@ -41,7 +42,7 @@ public class OrderedBagOfChars extends TcuLookUpTable{
 		
 		String orderedChars = getOrderedChars(unit);
 
-		features.add(new Feature(FEATURE_NAME, orderedChars));
+		features.add(new Feature(FEATURE_NAME, orderedChars, FeatureType.BOOLEAN));
 		return features;
 	}
 

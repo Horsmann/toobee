@@ -37,6 +37,7 @@ import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
 import org.dkpro.tc.api.features.FeatureExtractor;
 import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 
 /**
@@ -100,7 +101,7 @@ public class Word2VecEmbeddings
         String[] vector = map.get(unit);
 
         for (int i = 0; i < vecLen; i++) {
-            features.add(new Feature(FEATURE_NAME + (i + 1), getValue(vector, i), isDefault(vector,i)));
+            features.add(new Feature(FEATURE_NAME + (i + 1), getValue(vector, i), isDefault(vector,i), FeatureType.NUMERIC));
         }
         return features;
     }

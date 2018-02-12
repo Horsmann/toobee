@@ -31,6 +31,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.features.FeatureType;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 import org.dkpro.tc.features.tcu.TcuLookUpTable;
 
@@ -71,7 +72,7 @@ public class IsName extends TcuLookUpTable{
 
 		String unit = aClassificationUnit.getCoveredText();
 
-		features.add(new Feature(FEATURE_NAME, isName(unit)));
+		features.add(new Feature(FEATURE_NAME, isName(unit), FeatureType.BOOLEAN));
 		return features;
 	}
 
