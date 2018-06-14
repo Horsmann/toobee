@@ -20,7 +20,8 @@ import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.unidue.ltl.toobee.normalization.NormalizationUtils;
 import de.unidue.ltl.toobee.twitterUtils.type.RawTweet;
 
-public abstract class RawJsonReaderAbstract extends JCasResourceCollectionReader_ImplBase
+public abstract class RawJsonReaderAbstract
+    extends JCasResourceCollectionReader_ImplBase
 {
 
     public static final String PARAM_ENCODING = "encoding";
@@ -34,11 +35,10 @@ public abstract class RawJsonReaderAbstract extends JCasResourceCollectionReader
     public static final String PARAM_UNESCAPE_JAVA = "PARAM_UNESCAPE_JAVA";
     @ConfigurationParameter(name = PARAM_UNESCAPE_JAVA, mandatory = true, defaultValue = "true")
     protected boolean unescapeJava;
-    
+
     public static final String PARAM_UNESCAPE_HTML = "PARAM_UNESCAPE_HTML";
     @ConfigurationParameter(name = PARAM_UNESCAPE_HTML, mandatory = true, defaultValue = "true")
     protected boolean unescapeHtml;
-
 
     public static final String PARAM_ALL_IN_LOWER_CASE = "PARAM_ALL_IN_LOWER_CASE ";
     @ConfigurationParameter(name = PARAM_ALL_IN_LOWER_CASE, mandatory = true, defaultValue = "false")
@@ -46,8 +46,8 @@ public abstract class RawJsonReaderAbstract extends JCasResourceCollectionReader
 
     public static Boolean forceStopHasNoNext = null;
 
-    int documentIdCounter=0;
-    
+    int documentIdCounter = 0;
+
     protected int currentReaderIdx = 0;
     protected List<Resource> fileResources = null;
     protected List<BufferedReader> initializedReaders = null;
@@ -57,20 +57,21 @@ public abstract class RawJsonReaderAbstract extends JCasResourceCollectionReader
 
     protected static final String CREATE_MARKER = "\"created_at\"";
     protected static final String TEXT_MARKER = "\"text\":\"";
-    protected static final String MARKER_END = "\",";
+    protected static final String TEXT_MARKER_END = "\",";
+    protected static final String ID_MARKER = "\"id\":";
+    protected static final String ID_MARKER_END = ",";
+    
+
     @Override
-    public void initialize(UimaContext context)
-        throws ResourceInitializationException
+    public void initialize(UimaContext context) throws ResourceInitializationException
     {
         super.initialize(context);
         collectResources();
     }
 
     protected abstract void collectResources();
-     
 
-    protected boolean dataRemains(BufferedReader reader)
-        throws IOException
+    protected boolean dataRemains(BufferedReader reader) throws IOException
     {
         boolean stillDataToRead = false;
 
@@ -91,13 +92,14 @@ public abstract class RawJsonReaderAbstract extends JCasResourceCollectionReader
         // we test for a 'text'-information and the 'created_at' information if
         // we find both we
         // conclude that a line is an actual twitter message
-        return nextLine.contains(CREATE_MARKER) && nextLine.contains(TEXT_MARKER) && !isTrashContent(nextLine);
+        return nextLine.contains(CREATE_MARKER) && nextLine.contains(TEXT_MARKER)
+                && !isTrashContent(nextLine);
     }
 
     private boolean isTrashContent(String nextLine2)
     {
-        String extract = getExtract(nextLine, TEXT_MARKER, MARKER_END);
-        return StringEscapeUtils.unescapeJava(extract).length() < 3; 
+        String extract = getExtract(nextLine, TEXT_MARKER, TEXT_MARKER_END);
+        return StringEscapeUtils.unescapeJava(extract).length() < 3;
     }
 
     public Progress[] getProgress()
@@ -106,49 +108,52 @@ public abstract class RawJsonReaderAbstract extends JCasResourceCollectionReader
     }
 
     @Override
-    public void getNext(JCas jCas)
-        throws IOException, CollectionException
+    public void getNext(JCas jCas) throws IOException, CollectionException
     {
-    	DocumentMetaData dmd = new DocumentMetaData(jCas);
-    	dmd.setDocumentId(""+documentIdCounter++);
-    	dmd.addToIndexes();
-    	
+
+        // make payload the document text
+        String payload = getExtract(nextLine, TEXT_MARKER, TEXT_MARKER_END);
+        String twitterId = getExtract(nextLine, ID_MARKER, ID_MARKER_END);
+        logDebug("Extracted payload: " + "[" + payload + "]");
+
         // annotate raw-tweet in an own type
         RawTweet raw = new RawTweet(jCas);
         raw.setRawTweet(nextLine);
+        raw.setPayload(payload);
+        raw.setId(twitterId);
         raw.addToIndexes();
 
-        // make payload the document text
-        String extract = getExtract(nextLine, TEXT_MARKER, MARKER_END);
-        logDebug("Extracted payload: " + "[" + extract + "]");
+        DocumentMetaData dmd = new DocumentMetaData(jCas);
+        dmd.setDocumentId(twitterId);
+        dmd.addToIndexes();
 
         if (unescapeJava) {
-            extract = StringEscapeUtils.unescapeJava(extract);
+            payload = StringEscapeUtils.unescapeJava(payload);
         }
-        
+
         if (unescapeHtml) {
-            extract = StringEscapeUtils.unescapeHtml(extract);
+            payload = StringEscapeUtils.unescapeHtml(payload);
         }
 
         if (useLowerCase) {
-            extract = extract.toLowerCase();
+            payload = payload.toLowerCase();
         }
 
         if (removeTwitterPhenomenons) {
-            extract = NormalizationUtils.replaceTwitterPhenomenons(extract, "");
+            payload = NormalizationUtils.replaceTwitterPhenomenons(payload, "");
         }
 
-        jCas.setDocumentText(extract);
+        jCas.setDocumentText(payload);
 
         jCas.setDocumentLanguage("x-unspecified");
     }
 
     static String getExtract(String rawText, final String START, final String END)
     {
-    	if (rawText == null){
-    		return "";
-    	}
-    	
+        if (rawText == null) {
+            return "";
+        }
+
         int idxStart = rawText.indexOf(START);
         int idxEnd = rawText.indexOf(END, idxStart + START.length());
 

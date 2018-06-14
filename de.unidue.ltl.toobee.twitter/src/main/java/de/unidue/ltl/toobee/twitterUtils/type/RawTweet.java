@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Sun Jan 31 13:22:30 CET 2016
+ * Updated by JCasGen Thu Jun 14 13:41:35 CEST 2018
  * XML source: /Users/toobee/Documents/Eclipse/toobee/de.unidue.ltl.toobee.twitter/src/main/resources/desc/type/RawTweet.xml
  * @generated */
 public class RawTweet extends Annotation {
@@ -96,6 +96,50 @@ public class RawTweet extends Annotation {
     if (RawTweet_Type.featOkTst && ((RawTweet_Type)jcasType).casFeat_rawTweet == null)
       jcasType.jcas.throwFeatMissing("rawTweet", "de.unidue.ltl.toobee.twitterUtils.type.RawTweet");
     jcasType.ll_cas.ll_setStringValue(addr, ((RawTweet_Type)jcasType).casFeatCode_rawTweet, v);}    
+   
+    
+  //*--------------*
+  //* Feature: payload
+
+  /** getter for payload - gets 
+   * @generated
+   * @return value of the feature 
+   */
+  public String getPayload() {
+    if (RawTweet_Type.featOkTst && ((RawTweet_Type)jcasType).casFeat_payload == null)
+      jcasType.jcas.throwFeatMissing("payload", "de.unidue.ltl.toobee.twitterUtils.type.RawTweet");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((RawTweet_Type)jcasType).casFeatCode_payload);}
+    
+  /** setter for payload - sets  
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setPayload(String v) {
+    if (RawTweet_Type.featOkTst && ((RawTweet_Type)jcasType).casFeat_payload == null)
+      jcasType.jcas.throwFeatMissing("payload", "de.unidue.ltl.toobee.twitterUtils.type.RawTweet");
+    jcasType.ll_cas.ll_setStringValue(addr, ((RawTweet_Type)jcasType).casFeatCode_payload, v);}    
+   
+    
+  //*--------------*
+  //* Feature: id
+
+  /** getter for id - gets 
+   * @generated
+   * @return value of the feature 
+   */
+  public String getId() {
+    if (RawTweet_Type.featOkTst && ((RawTweet_Type)jcasType).casFeat_id == null)
+      jcasType.jcas.throwFeatMissing("id", "de.unidue.ltl.toobee.twitterUtils.type.RawTweet");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((RawTweet_Type)jcasType).casFeatCode_id);}
+    
+  /** setter for id - sets  
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setId(String v) {
+    if (RawTweet_Type.featOkTst && ((RawTweet_Type)jcasType).casFeat_id == null)
+      jcasType.jcas.throwFeatMissing("id", "de.unidue.ltl.toobee.twitterUtils.type.RawTweet");
+    jcasType.ll_cas.ll_setStringValue(addr, ((RawTweet_Type)jcasType).casFeatCode_id, v);}    
   }
 
     

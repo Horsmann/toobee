@@ -14,30 +14,9 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Sun Jan 31 13:22:30 CET 2016
+ * Updated by JCasGen Thu Jun 14 13:41:35 CEST 2018
  * @generated */
 public class RawTweet_Type extends Annotation_Type {
-  /** @generated 
-   * @return the generator for this type
-   */
-  @Override
-  protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
-  private final FSGenerator fsGenerator = 
-    new FSGenerator() {
-      public FeatureStructure createFS(int addr, CASImpl cas) {
-  			 if (RawTweet_Type.this.useExistingInstance) {
-  			   // Return eq fs instance if already created
-  		     FeatureStructure fs = RawTweet_Type.this.jcas.getJfsFromCaddr(addr);
-  		     if (null == fs) {
-  		       fs = new RawTweet(addr, RawTweet_Type.this);
-  			   RawTweet_Type.this.jcas.putJfsFromCaddr(addr, fs);
-  			   return fs;
-  		     }
-  		     return fs;
-        } else return new RawTweet(addr, RawTweet_Type.this);
-  	  }
-    };
   /** @generated */
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = RawTweet.typeIndexID;
@@ -69,6 +48,54 @@ public class RawTweet_Type extends Annotation_Type {
     ll_cas.ll_setStringValue(addr, casFeatCode_rawTweet, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_payload;
+  /** @generated */
+  final int     casFeatCode_payload;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getPayload(int addr) {
+        if (featOkTst && casFeat_payload == null)
+      jcas.throwFeatMissing("payload", "de.unidue.ltl.toobee.twitterUtils.type.RawTweet");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_payload);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setPayload(int addr, String v) {
+        if (featOkTst && casFeat_payload == null)
+      jcas.throwFeatMissing("payload", "de.unidue.ltl.toobee.twitterUtils.type.RawTweet");
+    ll_cas.ll_setStringValue(addr, casFeatCode_payload, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_id;
+  /** @generated */
+  final int     casFeatCode_id;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getId(int addr) {
+        if (featOkTst && casFeat_id == null)
+      jcas.throwFeatMissing("id", "de.unidue.ltl.toobee.twitterUtils.type.RawTweet");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_id);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setId(int addr, String v) {
+        if (featOkTst && casFeat_id == null)
+      jcas.throwFeatMissing("id", "de.unidue.ltl.toobee.twitterUtils.type.RawTweet");
+    ll_cas.ll_setStringValue(addr, casFeatCode_id, v);}
+    
+  
 
 
 
@@ -84,6 +111,14 @@ public class RawTweet_Type extends Annotation_Type {
  
     casFeat_rawTweet = jcas.getRequiredFeatureDE(casType, "rawTweet", "uima.cas.String", featOkTst);
     casFeatCode_rawTweet  = (null == casFeat_rawTweet) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_rawTweet).getCode();
+
+ 
+    casFeat_payload = jcas.getRequiredFeatureDE(casType, "payload", "uima.cas.String", featOkTst);
+    casFeatCode_payload  = (null == casFeat_payload) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_payload).getCode();
+
+ 
+    casFeat_id = jcas.getRequiredFeatureDE(casType, "id", "uima.cas.String", featOkTst);
+    casFeatCode_id  = (null == casFeat_id) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_id).getCode();
 
   }
 }
