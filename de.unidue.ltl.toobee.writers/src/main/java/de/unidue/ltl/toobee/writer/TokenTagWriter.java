@@ -36,6 +36,10 @@ public class TokenTagWriter
     public static final String PARAM_WRITE_COARSE = "PARAM_WRITE_COARSE";
     @ConfigurationParameter(name = PARAM_WRITE_COARSE, mandatory = true, defaultValue = "false")
     private boolean coarse;
+    
+    public static final String PARAM_SEPARATOR = "PARAM_SEPARATOR";
+    @ConfigurationParameter(name = PARAM_SEPARATOR, mandatory = true, defaultValue = "\t")
+    private String separator;
 
     private static StringBuilder sb = new StringBuilder();
 
@@ -83,7 +87,7 @@ public class TokenTagWriter
                         posValue = pos.getClass().getSimpleName();
                     }
                 }
-                sb.append(token.getCoveredText() + " " + posValue + "\n");
+                sb.append(token.getCoveredText() + separator + posValue + "\n");
                 tags.add(posValue);
                 tokens++;
             }
